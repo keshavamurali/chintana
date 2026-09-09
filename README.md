@@ -47,4 +47,9 @@ config/         training run configs (YAML)
 train.py        training loop
 sample.py       generate text from a checkpoint
 bench.py        benchmarking script
+experiments/    assignment work, kept separate from the base model/training code
 ```
+
+## Assignment work
+
+See [experiments/assignment11/README.md](experiments/assignment11/README.md).
