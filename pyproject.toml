@@ -1,0 +1,20 @@
+[project]
+name = "chintana"
+version = "0.1.0"
+description = "A modular, configurable GPT implementation"
+requires-python = ">=3.10"
+dependencies = [
+    "torch==2.2.2", # last PyPI release with an Intel macOS (x86_64) wheel
+    "numpy>=1.24,<2", # torch==2.2.2 was compiled against the NumPy 1.x ABI
+    "tiktoken>=0.5",
+]
+
+[project.optional-dependencies]
+pretrained = ["transformers>=4.40"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["chintana"]
