@@ -18,29 +18,32 @@ uv run python data/shakespeare/prepare.py        # BPE-tokenized shakespeare
 ## Train
 
 ```bash
-uv run python train.py config/train_shakespeare_char.py --device=cpu --compile=False
+uv run python train.py config/train_shakespeare_char.yaml system.device=cpu system.compile=false
 ```
 
-Override any config value from the command line, e.g.:
+Config files are nested YAML, loaded and merged with `OmegaConf` (see
+`chintana/train_config.py` for the schema). Override any value from the
+command line with a dotted `key=value`, e.g.:
 
 ```bash
-uv run python train.py config/train_shakespeare_char.py --max_iters=1000 --batch_size=32
+uv run python train.py config/train_shakespeare_char.yaml optim.max_iters=1000 data.batch_size=32
 ```
 
-Checkpoints are written to `out_dir` (see the config file) as `ckpt.pt`.
+Checkpoints are written to `io.out_dir` (see the config file) as `ckpt.pt`.
 
 ## Sample from a checkpoint
 
 ```bash
-uv run python sample.py --out_dir=out-shakespeare-char --device=cpu
+uv run python sample.py out_dir=out-shakespeare-char device=cpu
 ```
 
 ## Project layout
 
 ```
-chintana/       model code (config, norm, attention, mlp, block, gpt)
+chintana/       model code (config, norm, attention, mlp, block, gpt) +
+                 nested config schema and loader (train_config.py, configuration.py)
 data/           per-dataset prepare.py scripts + prepared .bin files
-config/         training run configs
+config/         training run configs (YAML)
 train.py        training loop
 sample.py       generate text from a checkpoint
 bench.py        benchmarking script

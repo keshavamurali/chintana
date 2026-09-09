@@ -7,6 +7,8 @@ dependencies = [
     "torch==2.2.2", # last PyPI release with an Intel macOS (x86_64) wheel
     "numpy>=1.24,<2", # torch==2.2.2 was compiled against the NumPy 1.x ABI
     "tiktoken>=0.5",
+    "omegaconf>=2.3.1",
+    "matplotlib>=3.10.9",
 ]
 
 [project.optional-dependencies]

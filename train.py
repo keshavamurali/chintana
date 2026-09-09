@@ -3,7 +3,7 @@ This training script can be run both on a single gpu in debug mode,
 and also in a larger training run with distributed data parallel (ddp).
 
 To run on a single GPU, example:
-$ python train.py --batch_size=32 --compile=False
+$ python train.py config/train_shakespeare_char.yaml system.device=cpu system.compile=false
 
 To run with DDP on 4 gpus on 1 node, example:
 $ torchrun --standalone --nproc_per_node=4 train.py
@@ -16,6 +16,7 @@ $ torchrun --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr=123.456.123
 (If your cluster does not have Infiniband interconnect prepend NCCL_IB_DISABLE=1)
 """
 
+import dataclasses
 import os
 import time
 import math
@@ -27,56 +28,56 @@ import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed import init_process_group, destroy_process_group
 
-from chintana import GPTConfig, GPT
+from chintana import GPTConfig, GPT, TrainConfig, load_config
 
 # -----------------------------------------------------------------------------
-# default config values designed to train a gpt2 (124M) on OpenWebText
-# I/O
-out_dir = 'out'
-eval_interval = 2000
-log_interval = 1
-eval_iters = 200
-eval_only = False # if True, script exits right after the first eval
-always_save_checkpoint = True # if True, always save a checkpoint after each eval
-init_from = 'scratch' # 'scratch' or 'resume' or 'gpt2*'
-# wandb logging
-wandb_log = False # disabled by default
-wandb_project = 'owt'
-wandb_run_name = 'gpt2' # 'run' + str(time.time())
-# data
-dataset = 'openwebtext'
-gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
-batch_size = 12 # if gradient_accumulation_steps > 1, this is the micro-batch size
-block_size = 1024
-# model
-n_layer = 12
-n_head = 12
-n_embd = 768
-dropout = 0.0 # for pretraining 0 is good, for finetuning try 0.1+
-bias = False # do we use bias inside LayerNorm and Linear layers?
-# adamw optimizer
-learning_rate = 6e-4 # max learning rate
-max_iters = 600000 # total number of training iterations
-weight_decay = 1e-1
-beta1 = 0.9
-beta2 = 0.95
-grad_clip = 1.0 # clip gradients at this value, or disable if == 0.0
-# learning rate decay settings
-decay_lr = True # whether to decay the learning rate
-warmup_iters = 2000 # how many steps to warm up for
-lr_decay_iters = 600000 # should be ~= max_iters per Chinchilla
-min_lr = 6e-5 # minimum learning rate, should be ~= learning_rate/10 per Chinchilla
-# DDP settings
-backend = 'nccl' # 'nccl', 'gloo', etc.
-# system
-device = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1' etc., or try 'mps' on macbooks
-dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16' # 'float32', 'bfloat16', or 'float16', the latter will auto implement a GradScaler
-compile = True # use PyTorch 2.0 to compile the model to be faster
+# config is layered: TrainConfig defaults -> YAML file(s) -> dotted CLI overrides, e.g.:
+# $ python train.py config/train_shakespeare_char.yaml optim.learning_rate=5e-4
+cfg = load_config(TrainConfig)
+config = dataclasses.asdict(cfg)  # snapshot for logging / checkpointing
 # -----------------------------------------------------------------------------
-config_keys = [k for k,v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
-exec(open('configurator.py').read()) # overrides from command line or config file
-config = {k: globals()[k] for k in config_keys} # will be useful for logging
-# -----------------------------------------------------------------------------
+
+# unpack the nested config into local names used by the rest of this script
+out_dir = cfg.io.out_dir
+eval_interval = cfg.io.eval_interval
+log_interval = cfg.io.log_interval
+eval_iters = cfg.io.eval_iters
+eval_only = cfg.io.eval_only  # if True, script exits right after the first eval
+always_save_checkpoint = cfg.io.always_save_checkpoint  # if True, always save a checkpoint after each eval
+init_from = cfg.io.init_from  # 'scratch' or 'resume' or 'gpt2*'
+
+wandb_log = cfg.wandb.log
+wandb_project = cfg.wandb.project
+wandb_run_name = cfg.wandb.run_name
+
+dataset = cfg.data.dataset
+gradient_accumulation_steps = cfg.data.gradient_accumulation_steps  # used to simulate larger batch sizes
+batch_size = cfg.data.batch_size  # if gradient_accumulation_steps > 1, this is the micro-batch size
+block_size = cfg.model.block_size
+
+n_layer = cfg.model.n_layer
+n_head = cfg.model.n_head
+n_embd = cfg.model.n_embd
+dropout = cfg.model.dropout
+bias = cfg.model.bias  # do we use bias inside LayerNorm and Linear layers?
+
+learning_rate = cfg.optim.learning_rate  # max learning rate
+max_iters = cfg.optim.max_iters  # total number of training iterations
+weight_decay = cfg.optim.weight_decay
+beta1 = cfg.optim.beta1
+beta2 = cfg.optim.beta2
+grad_clip = cfg.optim.grad_clip  # clip gradients at this value, or disable if == 0.0
+decay_lr = cfg.optim.decay_lr  # whether to decay the learning rate
+warmup_iters = cfg.optim.warmup_iters  # how many steps to warm up for
+lr_decay_iters = cfg.optim.lr_decay_iters  # should be ~= max_iters per Chinchilla
+min_lr = cfg.optim.min_lr  # minimum learning rate, should be ~= learning_rate/10 per Chinchilla
+
+backend = cfg.system.backend  # 'nccl', 'gloo', etc.
+device = cfg.system.device  # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1' etc., or try 'mps' on macbooks
+dtype = cfg.system.dtype
+if dtype == 'auto':
+    dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
+compile = cfg.system.compile  # use PyTorch 2.0 to compile the model to be faster
 
 # various inits, derived attributes, I/O setup
 ddp = int(os.environ.get('RANK', -1)) != -1 # is this a ddp run?

@@ -4,23 +4,41 @@ Sample from a trained model
 import os
 import pickle
 from contextlib import nullcontext
+from dataclasses import dataclass
+
 import torch
 import tiktoken
-from chintana import GPTConfig, GPT
+from chintana import GPTConfig, GPT, load_config
 
 # -----------------------------------------------------------------------------
-init_from = 'resume' # either 'resume' (from an out_dir) or a gpt2 variant (e.g. 'gpt2-xl')
-out_dir = 'out' # ignored if init_from is not 'resume'
-start = "\n" # or "<|endoftext|>" or etc. Can also specify a file, use as: "FILE:prompt.txt"
-num_samples = 10 # number of samples to draw
-max_new_tokens = 500 # number of tokens generated in each sample
-temperature = 0.8 # 1.0 = no change, < 1.0 = less random, > 1.0 = more random, in predictions
-top_k = 200 # retain only the top_k most likely tokens, clamp others to have 0 probability
-seed = 1337
-device = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1', etc.
-dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16' # 'float32' or 'bfloat16' or 'float16'
-compile = False # use PyTorch 2.0 to compile the model to be faster
-exec(open('configurator.py').read()) # overrides from command line or config file
+@dataclass
+class SampleConfig:
+    init_from: str = 'resume' # either 'resume' (from an out_dir) or a gpt2 variant (e.g. 'gpt2-xl')
+    out_dir: str = 'out' # ignored if init_from is not 'resume'
+    start: str = "\n" # or "<|endoftext|>" or etc. Can also specify a file, use as: "FILE:prompt.txt"
+    num_samples: int = 10 # number of samples to draw
+    max_new_tokens: int = 500 # number of tokens generated in each sample
+    temperature: float = 0.8 # 1.0 = no change, < 1.0 = less random, > 1.0 = more random, in predictions
+    top_k: int = 200 # retain only the top_k most likely tokens, clamp others to have 0 probability
+    seed: int = 1337
+    device: str = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1', etc.
+    dtype: str = 'auto' # 'auto', 'float32', 'bfloat16', or 'float16'
+    compile: bool = False # use PyTorch 2.0 to compile the model to be faster
+
+cfg = load_config(SampleConfig) # overrides from a yaml file and/or dotted key=value CLI args
+init_from = cfg.init_from
+out_dir = cfg.out_dir
+start = cfg.start
+num_samples = cfg.num_samples
+max_new_tokens = cfg.max_new_tokens
+temperature = cfg.temperature
+top_k = cfg.top_k
+seed = cfg.seed
+device = cfg.device
+dtype = cfg.dtype
+if dtype == 'auto':
+    dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
+compile = cfg.compile
 # -----------------------------------------------------------------------------
 
 torch.manual_seed(seed)
@@ -55,8 +73,8 @@ if compile:
 
 # look for the meta pickle in case it is available in the dataset folder
 load_meta = False
-if init_from == 'resume' and 'config' in checkpoint and 'dataset' in checkpoint['config']: # older checkpoints might not have these...
-    meta_path = os.path.join('data', checkpoint['config']['dataset'], 'meta.pkl')
+if init_from == 'resume' and 'config' in checkpoint and 'dataset' in checkpoint['config'].get('data', {}): # older checkpoints might not have these...
+    meta_path = os.path.join('data', checkpoint['config']['data']['dataset'], 'meta.pkl')
     load_meta = os.path.exists(meta_path)
 if load_meta:
     print(f"Loading meta from {meta_path}...")

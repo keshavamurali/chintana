@@ -3,22 +3,37 @@ A much shorter version of train.py for benchmarking
 """
 import os
 from contextlib import nullcontext
+from dataclasses import dataclass
 import numpy as np
 import time
 import torch
-from chintana import GPTConfig, GPT
+from chintana import GPTConfig, GPT, load_config
 
 # -----------------------------------------------------------------------------
-batch_size = 12
-block_size = 1024
-bias = False
-real_data = True
-seed = 1337
-device = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1', etc.
-dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16' # 'float32' or 'bfloat16' or 'float16'
-compile = True # use PyTorch 2.0 to compile the model to be faster
-profile = False # use pytorch profiler, or just simple benchmarking?
-exec(open('configurator.py').read()) # overrides from command line or config file
+@dataclass
+class BenchConfig:
+    batch_size: int = 12
+    block_size: int = 1024
+    bias: bool = False
+    real_data: bool = True
+    seed: int = 1337
+    device: str = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1', etc.
+    dtype: str = 'auto' # 'auto', 'float32', 'bfloat16', or 'float16'
+    compile: bool = True # use PyTorch 2.0 to compile the model to be faster
+    profile: bool = False # use pytorch profiler, or just simple benchmarking?
+
+cfg = load_config(BenchConfig) # overrides from a yaml file and/or dotted key=value CLI args
+batch_size = cfg.batch_size
+block_size = cfg.block_size
+bias = cfg.bias
+real_data = cfg.real_data
+seed = cfg.seed
+device = cfg.device
+dtype = cfg.dtype
+if dtype == 'auto':
+    dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
+compile = cfg.compile
+profile = cfg.profile
 # -----------------------------------------------------------------------------
 
 torch.manual_seed(seed)

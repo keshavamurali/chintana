@@ -13,3 +13,5 @@ venv/
 .venv/
 .python-version
 out*/
+CLAUDE.md
+Claude.md
