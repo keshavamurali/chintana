@@ -2,7 +2,7 @@
 
 This directory holds the assignment work on top of Chintana, a modular,
 multi-file refactor of [nanoGPT](https://github.com/karpathy/nanoGPT) (see
-the repo root `README.md`/`CLAUDE.md` for the base project). This directory
+the repo root `README.md` for the base project). This directory
 is entirely additive: nothing here is imported by `train.py`, `sample.py`,
 `bench.py`, or `chintana/`, so the base model and training pipeline behave
 exactly as before except for the one deliberate change described below.
