@@ -3,7 +3,7 @@ A from-scratch, dependency-free reimplementation of the Adam update rule
 (Kingma & Ba, 2015), applied one gradient at a time to a single weight.
 
 This mirrors exactly what torch.optim.Adam does per parameter (with
-weight_decay=0, i.e. plain Adam, not AdamW's decoupled decay):
+weight_decay=0):
 
     m_t = beta1 * m_{t-1} + (1 - beta1) * g_t
     v_t = beta2 * v_{t-1} + (1 - beta2) * g_t^2
