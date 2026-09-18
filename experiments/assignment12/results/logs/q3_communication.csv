@@ -1,0 +1,9 @@
+stage,op,bytes
+dp,all_reduce(grad),6421216
+zero1,reduce_scatter(grad),3210608
+zero1,all_gather(params),3210608
+zero2,reduce_scatter(grad),3210608
+zero2,all_gather(params),3210608
+zero3,"all_gather(params, forward)",3210608
+zero3,"all_gather(params, backward)",3210608
+zero3,reduce_scatter(grad),3210608
