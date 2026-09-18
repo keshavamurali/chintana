@@ -2,13 +2,13 @@
 
 This directory holds the assignment work on top of Chintana, a modular,
 multi-file refactor of [nanoGPT](https://github.com/karpathy/nanoGPT) (see the
-repo root `README.md`/`CLAUDE.md` for the base project). Like
+repo root `README.md` for the base project). Like
 `experiments/assignment11`, this directory is entirely additive: nothing here
 is imported by `train.py`, `sample.py`, `bench.py`, or `chintana/`, so the base
 model and training pipeline are untouched.
 
 The assignment: simulate 32 "virtual GPUs" (CPU threads, since this machine
-has no GPU -- see `CLAUDE.md`), build a demo model on top of them, and show how
+has no GPU), build a demo model on top of them, and show how
 ZeRO-1, ZeRO-2, and ZeRO-3 each change per-GPU memory and communication for one
 training step, relative to plain data parallelism.
 
@@ -16,7 +16,7 @@ training step, relative to plain data parallelism.
 
 Standard data parallelism (DP) replicates the *entire* training state -- model
 parameters, gradients, and optimizer state -- onto every GPU, and only
-parallelizes the data. For Adam this is wasteful: two GPUs training the same
+parallelizes the data. This is wasteful: two GPUs training the same
 model hold two bit-for-bit identical copies of every optimizer moment, every
 gradient, every parameter, and never use the other copy for anything. ZeRO
 (Rajbhandari et al., 2020, ["ZeRO: Memory Optimizations Toward Training
@@ -35,11 +35,9 @@ Each stage trades a little extra communication (ZeRO-3 only) for a large
 reduction in per-GPU memory, with the payoff growing as you add more GPUs --
 that's the point of testing this at N=32 rather than N=2.
 
-## What "understanding this" means here, concretely
+## Explanation
 
-It's easy to quote the paper's memory formula. The point of this simulation is
-to show the formula *falls out* of an actual mechanism, not that it was
-memorized:
+The point of this simulation is to show the formula *falls out* of an actual mechanism, not that it was memorized:
 
 1. **A real model, a real step.** Every stage runs a real forward + backward
    pass of a real `chintana.GPT` (see `common.py`), through real PyTorch
@@ -79,11 +77,11 @@ GPU currently holds (populated differently per ZeRO stage by `zero_engine.py`).
 `make_cluster(n_gpus, ...)` builds `n_gpus` of them, all initialized
 identically (as in real DP, every rank starts from the same broadcast init).
 
-**Honest caveat on "32 GPUs":** these are 32 Python threads on one CPU core
+**What are  "32 GPUs" ?:** these are 32 Python threads on one CPU core
 pool, not 32 independent accelerators. Python's GIL means the threads don't
 get real wall-clock parallelism for Python-level control flow (though PyTorch's
 C++ tensor kernels do release the GIL during the actual matmuls, so there's
-*some* real overlap) -- see the wall-clock caveat in Q3. The *memory* and
+*some* real overlap)  see the wall-clock caveat in Q3. The *memory* and
 *communication-volume* numbers, by contrast, don't depend on real hardware
 parallelism at all -- they're just "how many bytes does this rank hold / move,"
 which is exactly what the ZeRO paper's own analysis measures, so those numbers
