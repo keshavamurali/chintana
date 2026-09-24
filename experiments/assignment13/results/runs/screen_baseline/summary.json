@@ -1,0 +1,77 @@
+{
+  "name": "screen_baseline",
+  "variant": "baseline",
+  "coeffs": null,
+  "memory_saving": true,
+  "loss_impl": "fused",
+  "params_total": 7164928,
+  "params_non_embedding": 7082752,
+  "batch_size": 16,
+  "block_size": 256,
+  "steps": 123,
+  "tokens": 503808,
+  "peak_lr": 0.001,
+  "final_train_loss": 2.4756980538368225,
+  "final_val_loss": 2.4791921734809876,
+  "tokens_per_s": 3469.0791706096265,
+  "wall_s": 177.1645188331604,
+  "diverged": false,
+  "device": "cpu",
+  "dtype": "float32",
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO: or matest, chind myy, t inonore m.\n\nSowe thes wwito VAThis g d alise are, y ar thed timthen thathe tt sith hind omer he t pe lle te arofoth Bal torerrne orofe ss te thende ourusha gicis be herspo?\nBu",
+  "config": {
+    "model": {
+      "block_size": 256,
+      "vocab_size": 65,
+      "n_layer": 9,
+      "n_head": 8,
+      "n_embd": 256,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "rev": {
+      "variant": "baseline",
+      "h": null,
+      "a_seed": 0,
+      "memory_saving": true
+    },
+    "loss": {
+      "impl": "fused",
+      "chunk": 1024
+    },
+    "data": {
+      "dir": "data/shakespeare_char",
+      "batch_size": 16,
+      "total_tokens": 500000
+    },
+    "optim": {
+      "lr": 0.001,
+      "lr_scaling": "none",
+      "ref_batch_size": 64,
+      "lr_cap": 0.003,
+      "min_lr_frac": 0.1,
+      "warmup_frac": 0.03,
+      "min_warmup_steps": 10,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "screen_baseline",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment13/results/runs",
+      "device": "auto",
+      "dtype": "auto",
+      "seed": 1337,
+      "log_interval": 50,
+      "n_evals": 5,
+      "eval_batches": 20,
+      "eval_batch_size": 16,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": false,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

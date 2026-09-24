@@ -1,0 +1,123 @@
+{
+  "name": "screen_midpoint",
+  "variant": "midpoint",
+  "coeffs": [
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "memory_saving": true,
+  "loss_impl": "fused",
+  "params_total": 7164928,
+  "params_non_embedding": 7082752,
+  "batch_size": 16,
+  "block_size": 256,
+  "steps": 123,
+  "tokens": 503808,
+  "peak_lr": 0.001,
+  "final_train_loss": 2.4710599780082703,
+  "final_val_loss": 2.480538272857666,
+  "tokens_per_s": 2918.3196375002203,
+  "wall_s": 206.9333598613739,
+  "diverged": false,
+  "device": "cpu",
+  "dtype": "float32",
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHy may, timanin g, yes I oupore m.\n\nSowe thes wwito m Thin god alive are, ular thed timth he rathe tt sith mpes omer he t pe lle te profoth Bal torerrne orofe ss te thendeathinis: gicis be hemer se h",
+  "config": {
+    "model": {
+      "block_size": 256,
+      "vocab_size": 65,
+      "n_layer": 9,
+      "n_head": 8,
+      "n_embd": 256,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "rev": {
+      "variant": "midpoint",
+      "h": null,
+      "a_seed": 0,
+      "memory_saving": true
+    },
+    "loss": {
+      "impl": "fused",
+      "chunk": 1024
+    },
+    "data": {
+      "dir": "data/shakespeare_char",
+      "batch_size": 16,
+      "total_tokens": 500000
+    },
+    "optim": {
+      "lr": 0.001,
+      "lr_scaling": "none",
+      "ref_batch_size": 64,
+      "lr_cap": 0.003,
+      "min_lr_frac": 0.1,
+      "warmup_frac": 0.03,
+      "min_warmup_steps": 10,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "screen_midpoint",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment13/results/runs",
+      "device": "auto",
+      "dtype": "auto",
+      "seed": 1337,
+      "log_interval": 50,
+      "n_evals": 5,
+      "eval_batches": 20,
+      "eval_batch_size": 16,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": false,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

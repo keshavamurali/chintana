@@ -1,0 +1,15 @@
+# Run 3: the run-2 model at the largest batch memory_probe.py found for it.
+# Same 50M-token budget, so far fewer optimizer steps; the peak lr is raised
+# by sqrt(batch / 64) (capped at optim.lr_cap) to partly compensate.
+# Set data.batch_size on the command line from results/logs/max_batch.csv.
+rev:
+  variant: midpoint
+  memory_saving: true
+data:
+  batch_size: 1024
+  total_tokens: 50000000
+optim:
+  lr_scaling: sqrt
+  ref_batch_size: 64
+run:
+  name: run3_reversible_maxbatch

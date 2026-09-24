@@ -1,0 +1,11 @@
+variant,n_layer,batch_size,saved_mb,peak_mb
+baseline,3,16,200.7,223.2
+midpoint_a,3,16,12.1,131.4
+baseline,6,16,393.3,407.6
+midpoint_a,6,16,12.1,131.9
+baseline,9,16,585.8,591.2
+midpoint_a,9,16,12.1,131.8
+baseline,18,16,1163.5,1142.0
+midpoint_a,18,16,12.1,131.1
+baseline,36,16,2318.9,2153.1
+midpoint_a,36,16,12.1,129.9

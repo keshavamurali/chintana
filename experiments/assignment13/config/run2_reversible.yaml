@@ -1,0 +1,11 @@
+# Run 2: same model, same init, same data order, same batch as run 1 --
+# only the trunk is swapped for a reversible one. Pass the variant picked
+# by the screening runs, e.g. rev.variant=leapfrog.
+rev:
+  variant: midpoint
+  memory_saving: true
+data:
+  batch_size: 64
+  total_tokens: 50000000
+run:
+  name: run2_reversible

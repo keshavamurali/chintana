@@ -1,0 +1,5 @@
+variant,batch_size,reps,median_tokens_per_s,min,max
+baseline,16,5,4532,3871,4636
+midpoint_a,16,5,3616,3521,3775
+baseline,64,5,4291,4082,4412
+midpoint_a,64,5,3375,3353,3558

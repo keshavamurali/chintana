@@ -1,0 +1,23 @@
+# Small, fast local preset: character-level Tiny Shakespeare from the repo's
+# data/shakespeare_char (1.0M train / 0.11M val characters, 65-symbol vocab).
+# Combine with a run config, e.g.
+#   train.py config/run1_baseline.yaml config/shakespeare_char.yaml
+# model.vocab_size is taken from data/shakespeare_char/meta.pkl automatically.
+#
+# Same 9 x 256 trunk as the FineWeb model, but the vocabulary is 65 instead of
+# 50304, so the model is 7.2M parameters instead of 20.1M (the 12.9M-parameter
+# embedding/lm_head is what disappears). For a ~20M character model instead,
+# add: model.n_layer=11 model.n_head=6 model.n_embd=384  (19.6M parameters)
+model:
+  block_size: 256
+data:
+  dir: data/shakespeare_char
+  batch_size: 16
+  total_tokens: 2000000     # ~2 epochs of the 1.0M-character training split
+run:
+  eval_batches: 20
+  eval_batch_size: 16
+  n_evals: 5
+  log_interval: 10
+  sample_tokens: 200
+  sample_prompt: "ROMEO:"

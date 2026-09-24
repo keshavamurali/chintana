@@ -1,0 +1,123 @@
+{
+  "name": "screen_midpoint_a",
+  "variant": "midpoint_a",
+  "coeffs": [
+    [
+      -0.7420455970596975,
+      1.7420455970596975,
+      1.0
+    ],
+    [
+      -1.4595156218192225,
+      2.4595156218192225,
+      1.0
+    ],
+    [
+      -1.0950658625495857,
+      2.0950658625495855,
+      1.0
+    ],
+    [
+      -0.5322000050798286,
+      1.5322000050798286,
+      1.0
+    ],
+    [
+      -0.9166179605449688,
+      1.916617960544969,
+      1.0
+    ],
+    [
+      1.0046868558173903,
+      -0.004686855817390256,
+      1.0
+    ],
+    [
+      -1.3602542150333212,
+      2.3602542150333212,
+      1.0
+    ],
+    [
+      1.1183689966753316,
+      -0.11836899667533163,
+      1.0
+    ],
+    [
+      -0.5127407989669871,
+      1.5127407989669872,
+      1.0
+    ]
+  ],
+  "memory_saving": true,
+  "loss_impl": "fused",
+  "params_total": 7164928,
+  "params_non_embedding": 7082752,
+  "batch_size": 16,
+  "block_size": 256,
+  "steps": 123,
+  "tokens": 503808,
+  "peak_lr": 0.001,
+  "final_train_loss": 2.4549596508344016,
+  "final_val_loss": 2.468373143672943,
+  "tokens_per_s": 2868.5502396158563,
+  "wall_s": 210.20257997512817,
+  "diverged": false,
+  "device": "cpu",
+  "dtype": "float32",
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHe may stim find myy, t indouse m.\n\nSowe thes wwito m fou ONGLI live are, y ar thed tilthen thathe tt sith mpes omer he t pe llerey profoth I l torerrne orofe ss te thendeallluren gice h thisespo?\nBu",
+  "config": {
+    "model": {
+      "block_size": 256,
+      "vocab_size": 65,
+      "n_layer": 9,
+      "n_head": 8,
+      "n_embd": 256,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "rev": {
+      "variant": "midpoint_a",
+      "h": null,
+      "a_seed": 0,
+      "memory_saving": true
+    },
+    "loss": {
+      "impl": "fused",
+      "chunk": 1024
+    },
+    "data": {
+      "dir": "data/shakespeare_char",
+      "batch_size": 16,
+      "total_tokens": 500000
+    },
+    "optim": {
+      "lr": 0.001,
+      "lr_scaling": "none",
+      "ref_batch_size": 64,
+      "lr_cap": 0.003,
+      "min_lr_frac": 0.1,
+      "warmup_frac": 0.03,
+      "min_warmup_steps": 10,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "screen_midpoint_a",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment13/results/runs",
+      "device": "auto",
+      "dtype": "auto",
+      "seed": 1337,
+      "log_interval": 50,
+      "n_evals": 5,
+      "eval_batches": 20,
+      "eval_batch_size": 16,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": false,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

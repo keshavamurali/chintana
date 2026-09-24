@@ -1,0 +1,16 @@
+variant,n_layer,batch_size,block_size,saved_mb,peak_mb
+baseline,9,16,256,585.8,591.2
+midpoint,9,16,256,12.1,131.9
+midpoint_a,9,16,256,12.1,131.8
+leapfrog,9,16,256,12.1,131.8
+hamiltonian,9,16,256,12.1,140.3
+baseline,9,64,256,2343.1,2407.7
+midpoint,9,64,256,48.3,516.9
+midpoint_a,9,64,256,48.3,516.5
+leapfrog,9,64,256,48.3,516.5
+hamiltonian,9,64,256,48.3,549.0
+baseline,9,128,256,4686.1,4526.4
+midpoint,9,128,256,96.6,1029.7
+midpoint_a,9,128,256,96.6,1029.5
+leapfrog,9,128,256,96.6,1029.6
+hamiltonian,9,128,256,96.6,1093.6
