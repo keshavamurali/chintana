@@ -1,0 +1,1108 @@
+
+===== check =====
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+number of parameters: 0.20M
+{
+  "dense_equals_gpt": {
+    "identical_params": true,
+    "identical_logits": true,
+    "loss_gpt": 4.193334579467773,
+    "loss_moegpt": 4.193334579467773
+  },
+  "dispatch_vs_naive": [
+    {
+      "n_experts": 4,
+      "top_k": 1,
+      "capacity_factor": 0.0,
+      "max_abs_diff": 4.172325134277344e-07,
+      "dropped": 0,
+      "ok": true
+    },
+    {
+      "n_experts": 8,
+      "top_k": 2,
+      "capacity_factor": 0.0,
+      "max_abs_diff": 2.8312206268310547e-07,
+      "dropped": 0,
+      "ok": true
+    },
+    {
+      "n_experts": 8,
+      "top_k": 2,
+      "capacity_factor": 1.0,
+      "max_abs_diff": 1.9371509552001953e-07,
+      "dropped": 15,
+      "ok": true
+    },
+    {
+      "n_experts": 4,
+      "top_k": 2,
+      "capacity_factor": 0.5,
+      "max_abs_diff": 2.682209014892578e-07,
+      "dropped": 64,
+      "ok": true
+    }
+  ],
+  "upcycle_preserves_function": [
+    {
+      "n_experts": 8,
+      "top_k": 2,
+      "moe_every": 1,
+      "moe_layers": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "params_dense": 203392,
+      "params_total": 1122944,
+      "params_active": 336512,
+      "loss_dense": 4.21134090423584,
+      "loss_moe": 4.21134090423584,
+      "max_abs_logit_diff": 2.384185791015625e-07,
+      "ok": true
+    },
+    {
+      "n_experts": 8,
+      "top_k": 1,
+      "moe_every": 1,
+      "moe_layers": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "params_dense": 203392,
+      "params_total": 1122944,
+      "params_active": 205440,
+      "loss_dense": 4.21134090423584,
+      "loss_moe": 4.21134090423584,
+      "max_abs_logit_diff": 2.384185791015625e-07,
+      "ok": true
+    },
+    {
+      "n_experts": 4,
+      "top_k": 2,
+      "moe_every": 2,
+      "moe_layers": [
+        1,
+        3
+      ],
+      "params_dense": 203392,
+      "params_total": 400512,
+      "params_active": 269440,
+      "loss_dense": 4.21134090423584,
+      "loss_moe": 4.21134090423584,
+      "max_abs_logit_diff": 1.7881393432617188e-07,
+      "ok": true
+    },
+    {
+      "n_experts": 16,
+      "top_k": 4,
+      "moe_every": 1,
+      "moe_layers": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "params_dense": 203392,
+      "params_total": 2173568,
+      "params_active": 600704,
+      "loss_dense": 4.21134090423584,
+      "loss_moe": 4.21134090423584,
+      "max_abs_logit_diff": 2.980232238769531e-07,
+      "ok": true
+    },
+    {
+      "n_experts": 8,
+      "top_k": 2,
+      "normalize_topk": false,
+      "loss_dense": 4.21134090423584,
+      "loss_moe": 4.203200817108154,
+      "max_abs_logit_diff": 0.27805790305137634,
+      "ok": null
+    }
+  ],
+  "router_gradients": {
+    "router_grad_norm_from_lm": 0.069670544937253,
+    "router_grad_norm_from_aux": 0.17806410044431686,
+    "ok": true
+  }
+}
+ALL CHECKS PASSED
+
+===== dense =====
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/dense.yaml
+Overriding config with CLI args: ['run.name=dense', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'train.steps=2000']
+number of parameters: 0.80M
+[dense] dense init=scratch params total=0.812M active=0.812M B=32 T=128 steps=2000 lr=1.0e-03 device=cpu
+step 0 | val 4.1809
+step 25/2000 | loss 3.3922 | aux 0.000 | 23,746 tok/s
+step 50/2000 | loss 2.8435 | aux 0.000 | 20,510 tok/s
+step 75/2000 | loss 2.5958 | aux 0.000 | 20,013 tok/s
+step 100/2000 | loss 2.5696 | aux 0.000 | 20,212 tok/s
+step 125/2000 | loss 2.5278 | aux 0.000 | 19,595 tok/s
+step 150/2000 | loss 2.4657 | aux 0.000 | 19,512 tok/s
+step 175/2000 | loss 2.4197 | aux 0.000 | 18,223 tok/s
+step 200/2000 | loss 2.3837 | aux 0.000 | 18,495 tok/s
+step 225/2000 | loss 2.3660 | aux 0.000 | 19,245 tok/s
+step 250/2000 | loss 2.3325 | aux 0.000 | 18,927 tok/s
+step 250 | val 2.3419
+step 275/2000 | loss 2.2913 | aux 0.000 | 19,281 tok/s
+step 300/2000 | loss 2.3156 | aux 0.000 | 17,649 tok/s
+step 325/2000 | loss 2.2929 | aux 0.000 | 18,331 tok/s
+step 350/2000 | loss 2.2689 | aux 0.000 | 18,586 tok/s
+step 375/2000 | loss 2.2134 | aux 0.000 | 19,301 tok/s
+step 400/2000 | loss 2.1889 | aux 0.000 | 19,923 tok/s
+step 425/2000 | loss 2.1332 | aux 0.000 | 19,165 tok/s
+step 450/2000 | loss 2.1191 | aux 0.000 | 19,847 tok/s
+step 475/2000 | loss 2.0446 | aux 0.000 | 20,031 tok/s
+step 500/2000 | loss 2.0555 | aux 0.000 | 18,194 tok/s
+step 500 | val 2.1238
+step 525/2000 | loss 2.0273 | aux 0.000 | 15,612 tok/s
+step 550/2000 | loss 1.9997 | aux 0.000 | 16,698 tok/s
+step 575/2000 | loss 2.0041 | aux 0.000 | 15,197 tok/s
+step 600/2000 | loss 1.9826 | aux 0.000 | 12,621 tok/s
+step 625/2000 | loss 1.8850 | aux 0.000 | 14,874 tok/s
+step 650/2000 | loss 1.8819 | aux 0.000 | 15,736 tok/s
+step 675/2000 | loss 1.9023 | aux 0.000 | 13,618 tok/s
+step 700/2000 | loss 1.9126 | aux 0.000 | 12,705 tok/s
+step 725/2000 | loss 1.8882 | aux 0.000 | 13,882 tok/s
+step 750/2000 | loss 1.7957 | aux 0.000 | 16,506 tok/s
+step 750 | val 1.9577
+step 775/2000 | loss 1.8512 | aux 0.000 | 16,030 tok/s
+step 800/2000 | loss 1.7545 | aux 0.000 | 15,541 tok/s
+step 825/2000 | loss 1.7989 | aux 0.000 | 18,021 tok/s
+step 850/2000 | loss 1.7685 | aux 0.000 | 13,084 tok/s
+step 875/2000 | loss 1.7022 | aux 0.000 | 17,447 tok/s
+step 900/2000 | loss 1.7053 | aux 0.000 | 14,702 tok/s
+step 925/2000 | loss 1.7006 | aux 0.000 | 17,294 tok/s
+step 950/2000 | loss 1.7334 | aux 0.000 | 17,542 tok/s
+step 975/2000 | loss 1.6952 | aux 0.000 | 16,724 tok/s
+step 1000/2000 | loss 1.7092 | aux 0.000 | 13,280 tok/s
+step 1000 | val 1.8538
+step 1025/2000 | loss 1.6729 | aux 0.000 | 16,359 tok/s
+step 1050/2000 | loss 1.6293 | aux 0.000 | 15,782 tok/s
+step 1075/2000 | loss 1.6926 | aux 0.000 | 15,921 tok/s
+step 1100/2000 | loss 1.7024 | aux 0.000 | 15,176 tok/s
+step 1125/2000 | loss 1.6501 | aux 0.000 | 15,906 tok/s
+step 1150/2000 | loss 1.6700 | aux 0.000 | 14,716 tok/s
+step 1175/2000 | loss 1.6120 | aux 0.000 | 14,269 tok/s
+step 1200/2000 | loss 1.6278 | aux 0.000 | 14,455 tok/s
+step 1225/2000 | loss 1.6509 | aux 0.000 | 14,760 tok/s
+step 1250/2000 | loss 1.6723 | aux 0.000 | 16,573 tok/s
+step 1250 | val 1.7793
+step 1275/2000 | loss 1.5721 | aux 0.000 | 17,567 tok/s
+step 1300/2000 | loss 1.6074 | aux 0.000 | 16,926 tok/s
+step 1325/2000 | loss 1.5817 | aux 0.000 | 13,954 tok/s
+step 1350/2000 | loss 1.5650 | aux 0.000 | 16,102 tok/s
+step 1375/2000 | loss 1.6078 | aux 0.000 | 13,957 tok/s
+step 1400/2000 | loss 1.5591 | aux 0.000 | 13,226 tok/s
+step 1425/2000 | loss 1.5285 | aux 0.000 | 15,815 tok/s
+step 1450/2000 | loss 1.5188 | aux 0.000 | 12,067 tok/s
+step 1475/2000 | loss 1.5379 | aux 0.000 | 17,301 tok/s
+step 1500/2000 | loss 1.4788 | aux 0.000 | 17,423 tok/s
+step 1500 | val 1.7152
+step 1525/2000 | loss 1.5660 | aux 0.000 | 12,352 tok/s
+step 1550/2000 | loss 1.5002 | aux 0.000 | 10,706 tok/s
+step 1575/2000 | loss 1.5228 | aux 0.000 | 16,708 tok/s
+step 1600/2000 | loss 1.5051 | aux 0.000 | 16,749 tok/s
+step 1625/2000 | loss 1.5398 | aux 0.000 | 14,604 tok/s
+step 1650/2000 | loss 1.4601 | aux 0.000 | 13,766 tok/s
+step 1675/2000 | loss 1.5417 | aux 0.000 | 14,857 tok/s
+step 1700/2000 | loss 1.4649 | aux 0.000 | 17,893 tok/s
+step 1725/2000 | loss 1.5163 | aux 0.000 | 18,606 tok/s
+step 1750/2000 | loss 1.5203 | aux 0.000 | 19,097 tok/s
+step 1750 | val 1.6876
+step 1775/2000 | loss 1.5031 | aux 0.000 | 13,971 tok/s
+step 1800/2000 | loss 1.5054 | aux 0.000 | 14,049 tok/s
+step 1825/2000 | loss 1.5030 | aux 0.000 | 12,786 tok/s
+step 1850/2000 | loss 1.5033 | aux 0.000 | 13,168 tok/s
+step 1875/2000 | loss 1.4809 | aux 0.000 | 16,106 tok/s
+step 1900/2000 | loss 1.5294 | aux 0.000 | 16,812 tok/s
+step 1925/2000 | loss 1.5021 | aux 0.000 | 15,999 tok/s
+step 1950/2000 | loss 1.4775 | aux 0.000 | 17,296 tok/s
+step 1975/2000 | loss 1.4377 | aux 0.000 | 18,334 tok/s
+step 2000/2000 | loss 1.4536 | aux 0.000 | 18,200 tok/s
+step 2000 | val 1.6603
+{
+  "initial_val_loss": 4.180854368209839,
+  "final_train_loss": 1.4772398591041564,
+  "final_val_loss": 1.660255926847458,
+  "tokens_per_s": 15781.541799545239,
+  "wall_s": 536.6279671192169
+}
+
+===== dense_continue =====
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/dense_continue.yaml
+Overriding config with CLI args: ['run.name=dense_continue', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'init.from_ckpt=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt', 'train.steps=1500']
+number of parameters: 0.80M
+[dense_continue] dense init=resume params total=0.812M active=0.812M B=32 T=128 steps=1500 lr=5.0e-04 device=cpu
+step 0 | val 1.6603
+step 25/1500 | loss 1.4955 | aux 0.000 | 19,044 tok/s
+step 50/1500 | loss 1.5650 | aux 0.000 | 18,837 tok/s
+step 75/1500 | loss 1.5356 | aux 0.000 | 19,422 tok/s
+step 100/1500 | loss 1.5366 | aux 0.000 | 18,898 tok/s
+step 125/1500 | loss 1.5127 | aux 0.000 | 20,528 tok/s
+step 150/1500 | loss 1.4928 | aux 0.000 | 20,631 tok/s
+step 175/1500 | loss 1.5566 | aux 0.000 | 20,114 tok/s
+step 200/1500 | loss 1.4737 | aux 0.000 | 20,099 tok/s
+step 225/1500 | loss 1.4894 | aux 0.000 | 20,038 tok/s
+step 250/1500 | loss 1.4539 | aux 0.000 | 19,994 tok/s
+step 250 | val 1.6920
+step 275/1500 | loss 1.4708 | aux 0.000 | 20,333 tok/s
+step 300/1500 | loss 1.5779 | aux 0.000 | 20,458 tok/s
+step 325/1500 | loss 1.5290 | aux 0.000 | 15,063 tok/s
+step 350/1500 | loss 1.4801 | aux 0.000 | 20,569 tok/s
+step 375/1500 | loss 1.5104 | aux 0.000 | 20,682 tok/s
+step 400/1500 | loss 1.4884 | aux 0.000 | 20,841 tok/s
+step 425/1500 | loss 1.4400 | aux 0.000 | 20,571 tok/s
+step 450/1500 | loss 1.4582 | aux 0.000 | 20,423 tok/s
+step 475/1500 | loss 1.4336 | aux 0.000 | 20,486 tok/s
+step 500/1500 | loss 1.5089 | aux 0.000 | 20,076 tok/s
+step 500 | val 1.6698
+step 525/1500 | loss 1.5036 | aux 0.000 | 21,117 tok/s
+step 550/1500 | loss 1.4312 | aux 0.000 | 21,216 tok/s
+step 575/1500 | loss 1.5126 | aux 0.000 | 17,361 tok/s
+step 600/1500 | loss 1.4909 | aux 0.000 | 20,478 tok/s
+step 625/1500 | loss 1.3800 | aux 0.000 | 19,826 tok/s
+step 650/1500 | loss 1.3880 | aux 0.000 | 19,971 tok/s
+step 675/1500 | loss 1.4809 | aux 0.000 | 19,941 tok/s
+step 700/1500 | loss 1.4795 | aux 0.000 | 20,596 tok/s
+step 725/1500 | loss 1.4428 | aux 0.000 | 20,573 tok/s
+step 750/1500 | loss 1.4337 | aux 0.000 | 21,577 tok/s
+step 750 | val 1.6328
+step 775/1500 | loss 1.4561 | aux 0.000 | 21,591 tok/s
+step 800/1500 | loss 1.4023 | aux 0.000 | 17,799 tok/s
+step 825/1500 | loss 1.4636 | aux 0.000 | 20,093 tok/s
+step 850/1500 | loss 1.4295 | aux 0.000 | 20,607 tok/s
+step 875/1500 | loss 1.4271 | aux 0.000 | 20,729 tok/s
+step 900/1500 | loss 1.3761 | aux 0.000 | 19,655 tok/s
+step 925/1500 | loss 1.3678 | aux 0.000 | 19,892 tok/s
+step 950/1500 | loss 1.4343 | aux 0.000 | 19,814 tok/s
+step 975/1500 | loss 1.4115 | aux 0.000 | 20,510 tok/s
+step 1000/1500 | loss 1.4036 | aux 0.000 | 20,738 tok/s
+step 1000 | val 1.6118
+step 1025/1500 | loss 1.3977 | aux 0.000 | 20,494 tok/s
+step 1050/1500 | loss 1.3628 | aux 0.000 | 20,262 tok/s
+step 1075/1500 | loss 1.4481 | aux 0.000 | 20,153 tok/s
+step 1100/1500 | loss 1.4594 | aux 0.000 | 20,349 tok/s
+step 1125/1500 | loss 1.3872 | aux 0.000 | 20,446 tok/s
+step 1150/1500 | loss 1.4349 | aux 0.000 | 19,848 tok/s
+step 1175/1500 | loss 1.3833 | aux 0.000 | 20,061 tok/s
+step 1200/1500 | loss 1.4059 | aux 0.000 | 20,122 tok/s
+step 1225/1500 | loss 1.4266 | aux 0.000 | 19,720 tok/s
+step 1250/1500 | loss 1.4605 | aux 0.000 | 21,095 tok/s
+step 1250 | val 1.5883
+step 1275/1500 | loss 1.3538 | aux 0.000 | 20,747 tok/s
+step 1300/1500 | loss 1.4027 | aux 0.000 | 21,063 tok/s
+step 1325/1500 | loss 1.3725 | aux 0.000 | 19,067 tok/s
+step 1350/1500 | loss 1.3660 | aux 0.000 | 20,873 tok/s
+step 1375/1500 | loss 1.3924 | aux 0.000 | 21,021 tok/s
+step 1400/1500 | loss 1.3816 | aux 0.000 | 20,230 tok/s
+step 1425/1500 | loss 1.3536 | aux 0.000 | 20,366 tok/s
+step 1450/1500 | loss 1.3284 | aux 0.000 | 20,352 tok/s
+step 1475/1500 | loss 1.3569 | aux 0.000 | 19,765 tok/s
+step 1500/1500 | loss 1.3121 | aux 0.000 | 19,781 tok/s
+step 1500 | val 1.5775
+{
+  "initial_val_loss": 1.660255926847458,
+  "final_train_loss": 1.367961299419403,
+  "final_val_loss": 1.5774996101856231,
+  "tokens_per_s": 20111.815159440554,
+  "wall_s": 316.45093178749084
+}
+
+===== upcycle =====
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/moe_upcycle.yaml
+Overriding config with CLI args: ['run.name=moe_upcycle', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'init.from_ckpt=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt', 'train.steps=1500']
+number of parameters: 0.80M
+number of parameters: 0.80M
+[moe_upcycle] MoE E=8 k=2 layers=[0, 1, 2, 3] init=upcycle params total=4.486M active=1.341M B=32 T=128 steps=1500 lr=5.0e-04 device=cpu
+step 0 | val 1.6603 | aux 1.097
+step 25/1500 | loss 1.5046 | aux 1.046 | 10,175 tok/s
+step 50/1500 | loss 1.5695 | aux 1.192 | 9,772 tok/s
+step 75/1500 | loss 1.5399 | aux 1.327 | 9,603 tok/s
+step 100/1500 | loss 1.5510 | aux 1.441 | 9,774 tok/s
+step 125/1500 | loss 1.5189 | aux 1.599 | 9,467 tok/s
+step 150/1500 | loss 1.4953 | aux 1.697 | 7,970 tok/s
+step 175/1500 | loss 1.5641 | aux 1.816 | 9,553 tok/s
+step 200/1500 | loss 1.4615 | aux 1.809 | 10,114 tok/s
+step 225/1500 | loss 1.4938 | aux 1.846 | 9,859 tok/s
+step 250/1500 | loss 1.4515 | aux 1.898 | 9,435 tok/s
+step 250 | val 1.6835 | aux 1.902
+step 275/1500 | loss 1.4656 | aux 1.893 | 10,560 tok/s
+step 300/1500 | loss 1.5614 | aux 1.958 | 9,895 tok/s
+step 325/1500 | loss 1.5219 | aux 1.901 | 9,860 tok/s
+step 350/1500 | loss 1.4639 | aux 1.920 | 9,805 tok/s
+step 375/1500 | loss 1.4832 | aux 1.947 | 9,858 tok/s
+step 400/1500 | loss 1.4611 | aux 1.923 | 9,577 tok/s
+step 425/1500 | loss 1.4094 | aux 1.927 | 10,196 tok/s
+step 450/1500 | loss 1.4338 | aux 1.901 | 10,187 tok/s
+step 475/1500 | loss 1.4108 | aux 1.859 | 9,789 tok/s
+step 500/1500 | loss 1.4787 | aux 1.913 | 9,799 tok/s
+step 500 | val 1.6405 | aux 1.920
+step 525/1500 | loss 1.4734 | aux 1.900 | 10,083 tok/s
+step 550/1500 | loss 1.4002 | aux 1.865 | 9,737 tok/s
+step 575/1500 | loss 1.4850 | aux 1.888 | 9,730 tok/s
+step 600/1500 | loss 1.4514 | aux 1.853 | 9,502 tok/s
+step 625/1500 | loss 1.3422 | aux 1.801 | 9,569 tok/s
+step 650/1500 | loss 1.3463 | aux 1.827 | 6,875 tok/s
+step 675/1500 | loss 1.4542 | aux 1.798 | 6,583 tok/s
+step 700/1500 | loss 1.4416 | aux 1.790 | 4,195 tok/s
+step 725/1500 | loss 1.4074 | aux 1.806 | 8,083 tok/s
+step 750/1500 | loss 1.3945 | aux 1.757 | 7,856 tok/s
+step 750 | val 1.5985 | aux 1.757
+step 775/1500 | loss 1.4072 | aux 1.747 | 9,824 tok/s
+step 800/1500 | loss 1.3645 | aux 1.778 | 10,440 tok/s
+step 825/1500 | loss 1.4172 | aux 1.765 | 10,856 tok/s
+step 850/1500 | loss 1.3895 | aux 1.701 | 10,628 tok/s
+step 875/1500 | loss 1.3832 | aux 1.696 | 10,654 tok/s
+step 900/1500 | loss 1.3365 | aux 1.686 | 9,615 tok/s
+step 925/1500 | loss 1.3105 | aux 1.657 | 9,683 tok/s
+step 950/1500 | loss 1.3810 | aux 1.655 | 9,982 tok/s
+step 975/1500 | loss 1.3712 | aux 1.637 | 9,915 tok/s
+step 1000/1500 | loss 1.3517 | aux 1.613 | 10,279 tok/s
+step 1000 | val 1.5702 | aux 1.608
+step 1025/1500 | loss 1.3452 | aux 1.605 | 9,744 tok/s
+step 1050/1500 | loss 1.3245 | aux 1.599 | 9,812 tok/s
+step 1075/1500 | loss 1.3846 | aux 1.587 | 9,939 tok/s
+step 1100/1500 | loss 1.4047 | aux 1.572 | 10,264 tok/s
+step 1125/1500 | loss 1.3294 | aux 1.543 | 10,279 tok/s
+step 1150/1500 | loss 1.3921 | aux 1.549 | 9,001 tok/s
+step 1175/1500 | loss 1.3362 | aux 1.531 | 10,101 tok/s
+step 1200/1500 | loss 1.3589 | aux 1.515 | 9,578 tok/s
+step 1225/1500 | loss 1.3719 | aux 1.490 | 10,089 tok/s
+step 1250/1500 | loss 1.4014 | aux 1.495 | 10,536 tok/s
+step 1250 | val 1.5510 | aux 1.493
+step 1275/1500 | loss 1.3048 | aux 1.462 | 10,187 tok/s
+step 1300/1500 | loss 1.3532 | aux 1.448 | 10,080 tok/s
+step 1325/1500 | loss 1.3089 | aux 1.449 | 10,082 tok/s
+step 1350/1500 | loss 1.3125 | aux 1.442 | 10,662 tok/s
+step 1375/1500 | loss 1.3324 | aux 1.431 | 10,516 tok/s
+step 1400/1500 | loss 1.3171 | aux 1.429 | 10,758 tok/s
+step 1425/1500 | loss 1.2945 | aux 1.428 | 10,312 tok/s
+step 1450/1500 | loss 1.2707 | aux 1.412 | 10,075 tok/s
+step 1475/1500 | loss 1.3052 | aux 1.410 | 10,558 tok/s
+step 1500/1500 | loss 1.2598 | aux 1.403 | 10,515 tok/s
+step 1500 | val 1.5367 | aux 1.403
+{
+  "initial_val_loss": 1.6602559208869934,
+  "final_train_loss": 1.3106458830833434,
+  "final_val_loss": 1.536727750301361,
+  "tokens_per_s": 9668.105793146791,
+  "wall_s": 666.057464838028
+}
+
+===== moe_scratch =====
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/moe_scratch.yaml
+Overriding config with CLI args: ['run.name=moe_scratch', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'train.steps=3500']
+number of parameters: 0.80M
+[moe_scratch] MoE E=8 k=2 layers=[0, 1, 2, 3] init=scratch params total=4.486M active=1.341M B=32 T=128 steps=3500 lr=1.0e-03 device=cpu
+step 0 | val 4.1842 | aux 1.010
+step 25/3500 | loss 3.3729 | aux 1.038 | 10,680 tok/s
+step 50/3500 | loss 2.8208 | aux 1.020 | 10,711 tok/s
+step 75/3500 | loss 2.5788 | aux 1.012 | 10,617 tok/s
+step 100/3500 | loss 2.5410 | aux 1.021 | 10,729 tok/s
+step 125/3500 | loss 2.4969 | aux 1.028 | 10,874 tok/s
+step 150/3500 | loss 2.4518 | aux 1.020 | 11,012 tok/s
+step 175/3500 | loss 2.3940 | aux 1.038 | 10,989 tok/s
+step 200/3500 | loss 2.3394 | aux 1.036 | 10,612 tok/s
+step 225/3500 | loss 2.3264 | aux 1.049 | 10,742 tok/s
+step 250/3500 | loss 2.2872 | aux 1.051 | 10,773 tok/s
+step 250 | val 2.2998 | aux 1.050
+step 275/3500 | loss 2.2450 | aux 1.052 | 10,430 tok/s
+step 300/3500 | loss 2.2879 | aux 1.072 | 10,536 tok/s
+step 325/3500 | loss 2.2791 | aux 1.078 | 10,924 tok/s
+step 350/3500 | loss 2.2406 | aux 1.087 | 10,643 tok/s
+step 375/3500 | loss 2.2092 | aux 1.138 | 10,858 tok/s
+step 400/3500 | loss 2.1597 | aux 1.130 | 10,869 tok/s
+step 425/3500 | loss 2.1078 | aux 1.140 | 10,275 tok/s
+step 450/3500 | loss 2.0907 | aux 1.144 | 10,480 tok/s
+step 475/3500 | loss 2.0151 | aux 1.170 | 10,324 tok/s
+step 500/3500 | loss 2.0048 | aux 1.194 | 10,668 tok/s
+step 500 | val 2.0743 | aux 1.177
+step 525/3500 | loss 1.9861 | aux 1.198 | 10,557 tok/s
+step 550/3500 | loss 1.9423 | aux 1.185 | 10,106 tok/s
+step 575/3500 | loss 1.9410 | aux 1.203 | 10,029 tok/s
+step 600/3500 | loss 1.9164 | aux 1.198 | 10,378 tok/s
+step 625/3500 | loss 1.7871 | aux 1.164 | 10,529 tok/s
+step 650/3500 | loss 1.7968 | aux 1.198 | 10,441 tok/s
+step 675/3500 | loss 1.8403 | aux 1.196 | 9,880 tok/s
+step 700/3500 | loss 1.8160 | aux 1.212 | 10,385 tok/s
+step 725/3500 | loss 1.7754 | aux 1.216 | 10,146 tok/s
+step 750/3500 | loss 1.7279 | aux 1.190 | 10,221 tok/s
+step 750 | val 1.9101 | aux 1.188
+step 775/3500 | loss 1.7767 | aux 1.179 | 10,207 tok/s
+step 800/3500 | loss 1.6631 | aux 1.186 | 10,436 tok/s
+step 825/3500 | loss 1.7209 | aux 1.209 | 10,415 tok/s
+step 850/3500 | loss 1.6874 | aux 1.187 | 10,741 tok/s
+step 875/3500 | loss 1.6229 | aux 1.205 | 10,364 tok/s
+step 900/3500 | loss 1.6076 | aux 1.174 | 10,595 tok/s
+step 925/3500 | loss 1.6033 | aux 1.183 | 10,511 tok/s
+step 950/3500 | loss 1.6600 | aux 1.211 | 10,439 tok/s
+step 975/3500 | loss 1.6030 | aux 1.196 | 9,827 tok/s
+step 1000/3500 | loss 1.6179 | aux 1.177 | 10,387 tok/s
+step 1000 | val 1.7910 | aux 1.173
+step 1025/3500 | loss 1.5886 | aux 1.205 | 10,381 tok/s
+step 1050/3500 | loss 1.5479 | aux 1.197 | 10,650 tok/s
+step 1075/3500 | loss 1.6063 | aux 1.186 | 10,535 tok/s
+step 1100/3500 | loss 1.6211 | aux 1.194 | 9,089 tok/s
+step 1125/3500 | loss 1.5544 | aux 1.175 | 10,597 tok/s
+step 1150/3500 | loss 1.5827 | aux 1.196 | 10,313 tok/s
+step 1175/3500 | loss 1.5420 | aux 1.196 | 10,768 tok/s
+step 1200/3500 | loss 1.5546 | aux 1.190 | 9,525 tok/s
+step 1225/3500 | loss 1.5622 | aux 1.196 | 10,538 tok/s
+step 1250/3500 | loss 1.5876 | aux 1.184 | 10,011 tok/s
+step 1250 | val 1.7172 | aux 1.173
+step 1275/3500 | loss 1.4818 | aux 1.184 | 10,378 tok/s
+step 1300/3500 | loss 1.5219 | aux 1.169 | 10,483 tok/s
+step 1325/3500 | loss 1.4692 | aux 1.185 | 10,451 tok/s
+step 1350/3500 | loss 1.4577 | aux 1.170 | 10,709 tok/s
+step 1375/3500 | loss 1.5049 | aux 1.175 | 10,270 tok/s
+step 1400/3500 | loss 1.4808 | aux 1.175 | 10,286 tok/s
+step 1425/3500 | loss 1.4369 | aux 1.172 | 10,854 tok/s
+step 1450/3500 | loss 1.3995 | aux 1.178 | 11,048 tok/s
+step 1475/3500 | loss 1.4421 | aux 1.181 | 10,717 tok/s
+step 1500/3500 | loss 1.3781 | aux 1.164 | 10,901 tok/s
+step 1500 | val 1.6381 | aux 1.167
+step 1525/3500 | loss 1.4502 | aux 1.179 | 10,538 tok/s
+step 1550/3500 | loss 1.4202 | aux 1.169 | 10,616 tok/s
+step 1575/3500 | loss 1.4238 | aux 1.172 | 10,796 tok/s
+step 1600/3500 | loss 1.4201 | aux 1.172 | 10,374 tok/s
+step 1625/3500 | loss 1.4385 | aux 1.160 | 10,479 tok/s
+step 1650/3500 | loss 1.3589 | aux 1.178 | 10,492 tok/s
+step 1675/3500 | loss 1.4395 | aux 1.186 | 10,511 tok/s
+step 1700/3500 | loss 1.3415 | aux 1.162 | 8,991 tok/s
+step 1725/3500 | loss 1.4090 | aux 1.151 | 10,662 tok/s
+step 1750/3500 | loss 1.4132 | aux 1.157 | 10,657 tok/s
+step 1750 | val 1.5986 | aux 1.149
+step 1775/3500 | loss 1.3834 | aux 1.143 | 10,626 tok/s
+step 1800/3500 | loss 1.3881 | aux 1.165 | 9,240 tok/s
+step 1825/3500 | loss 1.3890 | aux 1.156 | 10,590 tok/s
+step 1850/3500 | loss 1.4021 | aux 1.155 | 10,139 tok/s
+step 1875/3500 | loss 1.3716 | aux 1.168 | 10,622 tok/s
+step 1900/3500 | loss 1.4143 | aux 1.160 | 10,527 tok/s
+step 1925/3500 | loss 1.3922 | aux 1.151 | 10,646 tok/s
+step 1950/3500 | loss 1.3632 | aux 1.152 | 10,292 tok/s
+step 1975/3500 | loss 1.3205 | aux 1.141 | 10,450 tok/s
+step 2000/3500 | loss 1.3233 | aux 1.135 | 10,362 tok/s
+step 2000 | val 1.5644 | aux 1.133
+step 2025/3500 | loss 1.3724 | aux 1.146 | 10,416 tok/s
+step 2050/3500 | loss 1.3981 | aux 1.139 | 10,519 tok/s
+step 2075/3500 | loss 1.3479 | aux 1.128 | 9,827 tok/s
+step 2100/3500 | loss 1.3852 | aux 1.139 | 10,647 tok/s
+step 2125/3500 | loss 1.3689 | aux 1.134 | 10,521 tok/s
+step 2150/3500 | loss 1.3448 | aux 1.148 | 9,665 tok/s
+step 2175/3500 | loss 1.3642 | aux 1.133 | 10,325 tok/s
+step 2200/3500 | loss 1.3996 | aux 1.130 | 10,638 tok/s
+step 2225/3500 | loss 1.3139 | aux 1.126 | 10,256 tok/s
+step 2250/3500 | loss 1.3057 | aux 1.121 | 10,672 tok/s
+step 2250 | val 1.5456 | aux 1.118
+step 2275/3500 | loss 1.3577 | aux 1.132 | 10,825 tok/s
+step 2300/3500 | loss 1.2839 | aux 1.119 | 10,409 tok/s
+step 2325/3500 | loss 1.3145 | aux 1.122 | 10,656 tok/s
+step 2350/3500 | loss 1.3054 | aux 1.124 | 10,502 tok/s
+step 2375/3500 | loss 1.3065 | aux 1.126 | 10,669 tok/s
+step 2400/3500 | loss 1.3202 | aux 1.112 | 10,473 tok/s
+step 2425/3500 | loss 1.3388 | aux 1.121 | 10,459 tok/s
+step 2450/3500 | loss 1.3446 | aux 1.128 | 10,646 tok/s
+step 2475/3500 | loss 1.3028 | aux 1.123 | 10,431 tok/s
+step 2500/3500 | loss 1.2373 | aux 1.121 | 10,654 tok/s
+step 2500 | val 1.5258 | aux 1.118
+step 2525/3500 | loss 1.2551 | aux 1.118 | 10,191 tok/s
+step 2550/3500 | loss 1.2540 | aux 1.124 | 10,383 tok/s
+step 2575/3500 | loss 1.2516 | aux 1.108 | 10,540 tok/s
+step 2600/3500 | loss 1.3100 | aux 1.126 | 10,784 tok/s
+step 2625/3500 | loss 1.2975 | aux 1.110 | 10,584 tok/s
+step 2650/3500 | loss 1.2647 | aux 1.113 | 9,926 tok/s
+step 2675/3500 | loss 1.2679 | aux 1.116 | 10,491 tok/s
+step 2700/3500 | loss 1.3011 | aux 1.093 | 10,444 tok/s
+step 2725/3500 | loss 1.2413 | aux 1.112 | 10,522 tok/s
+step 2750/3500 | loss 1.2785 | aux 1.087 | 10,702 tok/s
+step 2750 | val 1.5193 | aux 1.092
+step 2775/3500 | loss 1.2918 | aux 1.111 | 10,260 tok/s
+step 2800/3500 | loss 1.2850 | aux 1.100 | 10,463 tok/s
+step 2825/3500 | loss 1.2579 | aux 1.101 | 10,604 tok/s
+step 2850/3500 | loss 1.3418 | aux 1.097 | 10,255 tok/s
+step 2875/3500 | loss 1.2588 | aux 1.100 | 9,739 tok/s
+step 2900/3500 | loss 1.2587 | aux 1.088 | 10,582 tok/s
+step 2925/3500 | loss 1.2619 | aux 1.096 | 10,306 tok/s
+step 2950/3500 | loss 1.2774 | aux 1.096 | 9,883 tok/s
+step 2975/3500 | loss 1.2436 | aux 1.091 | 10,485 tok/s
+step 3000/3500 | loss 1.2308 | aux 1.082 | 10,612 tok/s
+step 3000 | val 1.5120 | aux 1.086
+step 3025/3500 | loss 1.2621 | aux 1.093 | 10,527 tok/s
+step 3050/3500 | loss 1.2798 | aux 1.088 | 10,604 tok/s
+step 3075/3500 | loss 1.2860 | aux 1.092 | 10,439 tok/s
+step 3100/3500 | loss 1.3189 | aux 1.086 | 10,441 tok/s
+step 3125/3500 | loss 1.2942 | aux 1.086 | 10,555 tok/s
+step 3150/3500 | loss 1.2440 | aux 1.089 | 10,433 tok/s
+step 3175/3500 | loss 1.2760 | aux 1.079 | 10,517 tok/s
+step 3200/3500 | loss 1.2201 | aux 1.074 | 10,877 tok/s
+step 3225/3500 | loss 1.2216 | aux 1.078 | 10,490 tok/s
+step 3250/3500 | loss 1.1980 | aux 1.070 | 10,175 tok/s
+step 3250 | val 1.5034 | aux 1.076
+step 3275/3500 | loss 1.2310 | aux 1.078 | 10,425 tok/s
+step 3300/3500 | loss 1.2346 | aux 1.085 | 10,698 tok/s
+step 3325/3500 | loss 1.2053 | aux 1.081 | 10,365 tok/s
+step 3350/3500 | loss 1.2370 | aux 1.083 | 10,352 tok/s
+step 3375/3500 | loss 1.2688 | aux 1.080 | 10,551 tok/s
+step 3400/3500 | loss 1.2742 | aux 1.075 | 10,685 tok/s
+step 3425/3500 | loss 1.2311 | aux 1.083 | 10,678 tok/s
+step 3450/3500 | loss 1.2335 | aux 1.074 | 10,800 tok/s
+step 3475/3500 | loss 1.1939 | aux 1.072 | 11,109 tok/s
+step 3500/3500 | loss 1.2388 | aux 1.076 | 10,534 tok/s
+step 3500 | val 1.5016 | aux 1.077
+{
+  "initial_val_loss": 4.184153771400451,
+  "final_train_loss": 1.2316987228393554,
+  "final_val_loss": 1.5015735268592834,
+  "tokens_per_s": 10457.063013318973,
+  "wall_s": 1432.4584460258484
+}
+
+===== dense_wide =====
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/dense_wide.yaml
+Overriding config with CLI args: ['run.name=dense_wide', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'train.steps=3500']
+number of parameters: 0.80M
+[dense_wide] MoE E=1 k=1 layers=[0, 1, 2, 3] init=scratch params total=1.337M active=1.337M B=32 T=128 steps=3500 lr=1.0e-03 device=cpu
+step 0 | val 4.1716 | aux 1.000
+step 25/3500 | loss 3.3390 | aux 1.000 | 13,154 tok/s
+step 50/3500 | loss 2.8319 | aux 1.000 | 13,275 tok/s
+step 75/3500 | loss 2.5907 | aux 1.000 | 13,177 tok/s
+step 100/3500 | loss 2.5700 | aux 1.000 | 13,198 tok/s
+step 125/3500 | loss 2.5256 | aux 1.000 | 13,112 tok/s
+step 150/3500 | loss 2.4732 | aux 1.000 | 13,131 tok/s
+step 175/3500 | loss 2.4201 | aux 1.000 | 13,500 tok/s
+step 200/3500 | loss 2.3747 | aux 1.000 | 13,680 tok/s
+step 225/3500 | loss 2.3751 | aux 1.000 | 13,470 tok/s
+step 250/3500 | loss 2.3514 | aux 1.000 | 13,026 tok/s
+step 250 | val 2.3429 | aux 1.000
+step 275/3500 | loss 2.3056 | aux 1.000 | 13,295 tok/s
+step 300/3500 | loss 2.3307 | aux 1.000 | 13,186 tok/s
+step 325/3500 | loss 2.3107 | aux 1.000 | 13,053 tok/s
+step 350/3500 | loss 2.2946 | aux 1.000 | 13,483 tok/s
+step 375/3500 | loss 2.2576 | aux 1.000 | 13,557 tok/s
+step 400/3500 | loss 2.2247 | aux 1.000 | 13,283 tok/s
+step 425/3500 | loss 2.1735 | aux 1.000 | 13,679 tok/s
+step 450/3500 | loss 2.1491 | aux 1.000 | 13,053 tok/s
+step 475/3500 | loss 2.0972 | aux 1.000 | 12,684 tok/s
+step 500/3500 | loss 2.0904 | aux 1.000 | 13,369 tok/s
+step 500 | val 2.1517 | aux 1.000
+step 525/3500 | loss 2.0855 | aux 1.000 | 13,074 tok/s
+step 550/3500 | loss 2.0381 | aux 1.000 | 13,022 tok/s
+step 575/3500 | loss 2.0490 | aux 1.000 | 13,651 tok/s
+step 600/3500 | loss 2.0044 | aux 1.000 | 13,614 tok/s
+step 625/3500 | loss 1.9104 | aux 1.000 | 13,517 tok/s
+step 650/3500 | loss 1.9182 | aux 1.000 | 13,127 tok/s
+step 675/3500 | loss 1.9339 | aux 1.000 | 13,255 tok/s
+step 700/3500 | loss 1.9303 | aux 1.000 | 13,178 tok/s
+step 725/3500 | loss 1.8864 | aux 1.000 | 13,252 tok/s
+step 750/3500 | loss 1.8333 | aux 1.000 | 13,652 tok/s
+step 750 | val 1.9713 | aux 1.000
+step 775/3500 | loss 1.8748 | aux 1.000 | 13,452 tok/s
+step 800/3500 | loss 1.7695 | aux 1.000 | 13,313 tok/s
+step 825/3500 | loss 1.8306 | aux 1.000 | 13,016 tok/s
+step 850/3500 | loss 1.7871 | aux 1.000 | 13,140 tok/s
+step 875/3500 | loss 1.7208 | aux 1.000 | 12,871 tok/s
+step 900/3500 | loss 1.7061 | aux 1.000 | 13,367 tok/s
+step 925/3500 | loss 1.7122 | aux 1.000 | 13,429 tok/s
+step 950/3500 | loss 1.7444 | aux 1.000 | 13,672 tok/s
+step 975/3500 | loss 1.7121 | aux 1.000 | 13,110 tok/s
+step 1000/3500 | loss 1.7300 | aux 1.000 | 13,090 tok/s
+step 1000 | val 1.8693 | aux 1.000
+step 1025/3500 | loss 1.6915 | aux 1.000 | 12,942 tok/s
+step 1050/3500 | loss 1.6322 | aux 1.000 | 12,313 tok/s
+step 1075/3500 | loss 1.6896 | aux 1.000 | 13,558 tok/s
+step 1100/3500 | loss 1.7081 | aux 1.000 | 13,356 tok/s
+step 1125/3500 | loss 1.6489 | aux 1.000 | 13,639 tok/s
+step 1150/3500 | loss 1.6877 | aux 1.000 | 13,479 tok/s
+step 1175/3500 | loss 1.6278 | aux 1.000 | 13,149 tok/s
+step 1200/3500 | loss 1.6415 | aux 1.000 | 13,152 tok/s
+step 1225/3500 | loss 1.6497 | aux 1.000 | 13,061 tok/s
+step 1250/3500 | loss 1.6873 | aux 1.000 | 13,546 tok/s
+step 1250 | val 1.7837 | aux 1.000
+step 1275/3500 | loss 1.5697 | aux 1.000 | 11,355 tok/s
+step 1300/3500 | loss 1.6048 | aux 1.000 | 13,612 tok/s
+step 1325/3500 | loss 1.5655 | aux 1.000 | 11,357 tok/s
+step 1350/3500 | loss 1.5529 | aux 1.000 | 13,087 tok/s
+step 1375/3500 | loss 1.6014 | aux 1.000 | 13,175 tok/s
+step 1400/3500 | loss 1.5756 | aux 1.000 | 12,923 tok/s
+step 1425/3500 | loss 1.5469 | aux 1.000 | 13,396 tok/s
+step 1450/3500 | loss 1.4975 | aux 1.000 | 13,531 tok/s
+step 1475/3500 | loss 1.5296 | aux 1.000 | 13,645 tok/s
+step 1500/3500 | loss 1.4809 | aux 1.000 | 13,425 tok/s
+step 1500 | val 1.7184 | aux 1.000
+step 1525/3500 | loss 1.5566 | aux 1.000 | 12,965 tok/s
+step 1550/3500 | loss 1.5058 | aux 1.000 | 13,207 tok/s
+step 1575/3500 | loss 1.5205 | aux 1.000 | 12,933 tok/s
+step 1600/3500 | loss 1.4983 | aux 1.000 | 13,660 tok/s
+step 1625/3500 | loss 1.5267 | aux 1.000 | 13,597 tok/s
+step 1650/3500 | loss 1.4463 | aux 1.000 | 13,434 tok/s
+step 1675/3500 | loss 1.5369 | aux 1.000 | 13,564 tok/s
+step 1700/3500 | loss 1.4516 | aux 1.000 | 13,056 tok/s
+step 1725/3500 | loss 1.5000 | aux 1.000 | 13,157 tok/s
+step 1750/3500 | loss 1.5082 | aux 1.000 | 12,932 tok/s
+step 1750 | val 1.6664 | aux 1.000
+step 1775/3500 | loss 1.4764 | aux 1.000 | 13,373 tok/s
+step 1800/3500 | loss 1.4799 | aux 1.000 | 11,191 tok/s
+step 1825/3500 | loss 1.4825 | aux 1.000 | 13,240 tok/s
+step 1850/3500 | loss 1.4793 | aux 1.000 | 13,512 tok/s
+step 1875/3500 | loss 1.4564 | aux 1.000 | 12,975 tok/s
+step 1900/3500 | loss 1.4816 | aux 1.000 | 13,039 tok/s
+step 1925/3500 | loss 1.4829 | aux 1.000 | 12,912 tok/s
+step 1950/3500 | loss 1.4449 | aux 1.000 | 12,761 tok/s
+step 1975/3500 | loss 1.4040 | aux 1.000 | 13,007 tok/s
+step 2000/3500 | loss 1.4114 | aux 1.000 | 13,501 tok/s
+step 2000 | val 1.6282 | aux 1.000
+step 2025/3500 | loss 1.4633 | aux 1.000 | 12,986 tok/s
+step 2050/3500 | loss 1.4855 | aux 1.000 | 13,124 tok/s
+step 2075/3500 | loss 1.4164 | aux 1.000 | 13,145 tok/s
+step 2100/3500 | loss 1.4780 | aux 1.000 | 13,523 tok/s
+step 2125/3500 | loss 1.4555 | aux 1.000 | 13,110 tok/s
+step 2150/3500 | loss 1.4318 | aux 1.000 | 13,487 tok/s
+step 2175/3500 | loss 1.4485 | aux 1.000 | 13,442 tok/s
+step 2200/3500 | loss 1.4918 | aux 1.000 | 13,256 tok/s
+step 2225/3500 | loss 1.4169 | aux 1.000 | 13,309 tok/s
+step 2250/3500 | loss 1.3913 | aux 1.000 | 13,168 tok/s
+step 2250 | val 1.6028 | aux 1.000
+step 2275/3500 | loss 1.4533 | aux 1.000 | 9,643 tok/s
+step 2300/3500 | loss 1.3739 | aux 1.000 | 9,327 tok/s
+step 2325/3500 | loss 1.3851 | aux 1.000 | 9,088 tok/s
+step 2350/3500 | loss 1.3900 | aux 1.000 | 12,533 tok/s
+step 2375/3500 | loss 1.3882 | aux 1.000 | 13,499 tok/s
+step 2400/3500 | loss 1.4094 | aux 1.000 | 14,123 tok/s
+step 2425/3500 | loss 1.4197 | aux 1.000 | 13,860 tok/s
+step 2450/3500 | loss 1.4053 | aux 1.000 | 14,046 tok/s
+step 2475/3500 | loss 1.3928 | aux 1.000 | 14,024 tok/s
+step 2500/3500 | loss 1.3347 | aux 1.000 | 13,939 tok/s
+step 2500 | val 1.5855 | aux 1.000
+step 2525/3500 | loss 1.3445 | aux 1.000 | 13,327 tok/s
+step 2550/3500 | loss 1.3625 | aux 1.000 | 13,415 tok/s
+step 2575/3500 | loss 1.3474 | aux 1.000 | 12,578 tok/s
+step 2600/3500 | loss 1.4016 | aux 1.000 | 13,616 tok/s
+step 2625/3500 | loss 1.3955 | aux 1.000 | 13,989 tok/s
+step 2650/3500 | loss 1.3435 | aux 1.000 | 13,776 tok/s
+step 2675/3500 | loss 1.3597 | aux 1.000 | 13,908 tok/s
+step 2700/3500 | loss 1.3839 | aux 1.000 | 13,509 tok/s
+step 2725/3500 | loss 1.3241 | aux 1.000 | 13,236 tok/s
+step 2750/3500 | loss 1.3713 | aux 1.000 | 12,921 tok/s
+step 2750 | val 1.5680 | aux 1.000
+step 2775/3500 | loss 1.3769 | aux 1.000 | 13,474 tok/s
+step 2800/3500 | loss 1.3570 | aux 1.000 | 13,458 tok/s
+step 2825/3500 | loss 1.3344 | aux 1.000 | 13,793 tok/s
+step 2850/3500 | loss 1.4149 | aux 1.000 | 13,735 tok/s
+step 2875/3500 | loss 1.3342 | aux 1.000 | 13,893 tok/s
+step 2900/3500 | loss 1.3452 | aux 1.000 | 13,715 tok/s
+step 2925/3500 | loss 1.3476 | aux 1.000 | 13,335 tok/s
+step 2950/3500 | loss 1.3645 | aux 1.000 | 13,385 tok/s
+step 2975/3500 | loss 1.3353 | aux 1.000 | 12,797 tok/s
+step 3000/3500 | loss 1.3178 | aux 1.000 | 13,291 tok/s
+step 3000 | val 1.5606 | aux 1.000
+step 3025/3500 | loss 1.3627 | aux 1.000 | 13,761 tok/s
+step 3050/3500 | loss 1.3644 | aux 1.000 | 13,387 tok/s
+step 3075/3500 | loss 1.3703 | aux 1.000 | 13,280 tok/s
+step 3100/3500 | loss 1.4076 | aux 1.000 | 13,118 tok/s
+step 3125/3500 | loss 1.3797 | aux 1.000 | 12,919 tok/s
+step 3150/3500 | loss 1.3463 | aux 1.000 | 13,617 tok/s
+step 3175/3500 | loss 1.3569 | aux 1.000 | 13,194 tok/s
+step 3200/3500 | loss 1.3186 | aux 1.000 | 13,515 tok/s
+step 3225/3500 | loss 1.2994 | aux 1.000 | 13,650 tok/s
+step 3250/3500 | loss 1.2681 | aux 1.000 | 13,611 tok/s
+step 3250 | val 1.5477 | aux 1.000
+step 3275/3500 | loss 1.3108 | aux 1.000 | 13,411 tok/s
+step 3300/3500 | loss 1.3400 | aux 1.000 | 13,376 tok/s
+step 3325/3500 | loss 1.2785 | aux 1.000 | 12,639 tok/s
+step 3350/3500 | loss 1.3180 | aux 1.000 | 13,220 tok/s
+step 3375/3500 | loss 1.3556 | aux 1.000 | 11,738 tok/s
+step 3400/3500 | loss 1.3797 | aux 1.000 | 7,881 tok/s
+step 3425/3500 | loss 1.3120 | aux 1.000 | 14,533 tok/s
+step 3450/3500 | loss 1.3232 | aux 1.000 | 13,540 tok/s
+step 3475/3500 | loss 1.2975 | aux 1.000 | 14,671 tok/s
+step 3500/3500 | loss 1.3187 | aux 1.000 | 14,054 tok/s
+step 3500 | val 1.5474 | aux 1.000
+{
+  "initial_val_loss": 4.1715898513793945,
+  "final_train_loss": 1.3232110905647279,
+  "final_val_loss": 1.547440493106842,
+  "tokens_per_s": 13038.67730730037,
+  "wall_s": 1559.8400299549103
+}
+
+===== sweep =====
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/moe_upcycle.yaml
+Overriding config with CLI args: ['run.name=sweep_e4_k1', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'init.from_ckpt=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt', 'train.steps=1500', 'moe.n_experts=4', 'moe.top_k=1']
+number of parameters: 0.80M
+number of parameters: 0.80M
+[sweep_e4_k1] MoE E=4 k=1 layers=[0, 1, 2, 3] init=upcycle params total=2.387M active=0.814M B=32 T=128 steps=1500 lr=5.0e-04 device=cpu
+step 0 | val 1.6603 | aux 1.090
+step 25/1500 | loss 1.5091 | aux 1.006 | 13,082 tok/s
+step 50/1500 | loss 1.5940 | aux 1.006 | 16,793 tok/s
+step 75/1500 | loss 1.5470 | aux 1.003 | 11,973 tok/s
+step 100/1500 | loss 1.5747 | aux 1.001 | 7,953 tok/s
+step 125/1500 | loss 1.5535 | aux 1.004 | 6,622 tok/s
+step 150/1500 | loss 1.5245 | aux 1.003 | 9,633 tok/s
+step 175/1500 | loss 1.5941 | aux 1.003 | 6,156 tok/s
+step 200/1500 | loss 1.5034 | aux 1.003 | 4,871 tok/s
+step 225/1500 | loss 1.5238 | aux 1.004 | 10,282 tok/s
+step 250/1500 | loss 1.4742 | aux 1.003 | 12,998 tok/s
+step 250 | val 1.7071 | aux 1.003
+step 275/1500 | loss 1.4839 | aux 1.003 | 15,943 tok/s
+step 300/1500 | loss 1.6008 | aux 1.001 | 15,697 tok/s
+step 325/1500 | loss 1.5575 | aux 1.002 | 16,078 tok/s
+step 350/1500 | loss 1.5014 | aux 1.002 | 10,679 tok/s
+step 375/1500 | loss 1.5348 | aux 1.002 | 14,796 tok/s
+step 400/1500 | loss 1.5032 | aux 1.001 | 14,740 tok/s
+step 425/1500 | loss 1.4548 | aux 1.002 | 13,970 tok/s
+step 450/1500 | loss 1.4779 | aux 1.003 | 12,351 tok/s
+step 475/1500 | loss 1.4509 | aux 1.001 | 11,641 tok/s
+step 500/1500 | loss 1.5195 | aux 1.001 | 12,264 tok/s
+step 500 | val 1.6873 | aux 1.001
+step 525/1500 | loss 1.5223 | aux 1.002 | 7,404 tok/s
+step 550/1500 | loss 1.4562 | aux 1.003 | 7,434 tok/s
+step 575/1500 | loss 1.5322 | aux 1.002 | 8,880 tok/s
+step 600/1500 | loss 1.4972 | aux 1.001 | 10,080 tok/s
+step 625/1500 | loss 1.3905 | aux 1.003 | 10,747 tok/s
+step 650/1500 | loss 1.4013 | aux 1.001 | 11,047 tok/s
+step 675/1500 | loss 1.4930 | aux 1.001 | 11,833 tok/s
+step 700/1500 | loss 1.5092 | aux 1.001 | 11,514 tok/s
+step 725/1500 | loss 1.4563 | aux 1.001 | 10,541 tok/s
+step 750/1500 | loss 1.4368 | aux 1.000 | 10,331 tok/s
+step 750 | val 1.6406 | aux 1.000
+step 775/1500 | loss 1.4664 | aux 1.001 | 8,749 tok/s
+step 800/1500 | loss 1.3994 | aux 1.000 | 11,724 tok/s
+step 825/1500 | loss 1.4671 | aux 1.001 | 12,706 tok/s
+step 850/1500 | loss 1.4432 | aux 1.002 | 12,166 tok/s
+step 875/1500 | loss 1.4134 | aux 1.001 | 10,998 tok/s
+step 900/1500 | loss 1.3799 | aux 1.002 | 10,485 tok/s
+step 925/1500 | loss 1.3693 | aux 1.000 | 7,172 tok/s
+step 950/1500 | loss 1.4257 | aux 1.000 | 12,386 tok/s
+step 975/1500 | loss 1.4124 | aux 1.000 | 13,466 tok/s
+step 1000/1500 | loss 1.3985 | aux 1.000 | 14,117 tok/s
+step 1000 | val 1.6073 | aux 1.000
+step 1025/1500 | loss 1.3944 | aux 1.001 | 14,515 tok/s
+step 1050/1500 | loss 1.3616 | aux 1.001 | 14,559 tok/s
+step 1075/1500 | loss 1.4405 | aux 1.000 | 15,023 tok/s
+step 1100/1500 | loss 1.4466 | aux 1.000 | 15,096 tok/s
+step 1125/1500 | loss 1.3880 | aux 1.000 | 14,719 tok/s
+step 1150/1500 | loss 1.4335 | aux 1.000 | 11,338 tok/s
+step 1175/1500 | loss 1.3837 | aux 1.001 | 7,064 tok/s
+step 1200/1500 | loss 1.4053 | aux 1.001 | 8,980 tok/s
+step 1225/1500 | loss 1.4206 | aux 1.000 | 12,405 tok/s
+step 1250/1500 | loss 1.4507 | aux 1.000 | 12,061 tok/s
+step 1250 | val 1.5822 | aux 1.000
+step 1275/1500 | loss 1.3531 | aux 1.000 | 11,372 tok/s
+step 1300/1500 | loss 1.3925 | aux 1.001 | 11,195 tok/s
+step 1325/1500 | loss 1.3508 | aux 1.000 | 11,815 tok/s
+step 1350/1500 | loss 1.3468 | aux 1.001 | 12,061 tok/s
+step 1375/1500 | loss 1.3858 | aux 1.000 | 11,896 tok/s
+step 1400/1500 | loss 1.3593 | aux 1.000 | 9,190 tok/s
+step 1425/1500 | loss 1.3356 | aux 1.000 | 12,301 tok/s
+step 1450/1500 | loss 1.3148 | aux 1.000 | 12,322 tok/s
+step 1475/1500 | loss 1.3417 | aux 1.000 | 9,519 tok/s
+step 1500/1500 | loss 1.2998 | aux 1.000 | 9,497 tok/s
+step 1500 | val 1.5671 | aux 1.000
+{
+  "initial_val_loss": 1.6602559208869934,
+  "final_train_loss": 1.3539988207817077,
+  "final_val_loss": 1.567149466276169,
+  "tokens_per_s": 10730.201571633466,
+  "wall_s": 593.4123890399933
+}
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/moe_upcycle.yaml
+Overriding config with CLI args: ['run.name=sweep_e8_k1', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'init.from_ckpt=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt', 'train.steps=1500', 'moe.n_experts=8', 'moe.top_k=1']
+number of parameters: 0.80M
+number of parameters: 0.80M
+[sweep_e8_k1] MoE E=8 k=1 layers=[0, 1, 2, 3] init=upcycle params total=4.486M active=0.816M B=32 T=128 steps=1500 lr=5.0e-04 device=cpu
+step 0 | val 1.6603 | aux 1.109
+step 25/1500 | loss 1.5286 | aux 1.023 | 10,475 tok/s
+step 50/1500 | loss 1.6021 | aux 1.009 | 9,853 tok/s
+step 75/1500 | loss 1.5813 | aux 1.004 | 11,750 tok/s
+step 100/1500 | loss 1.6056 | aux 1.003 | 9,737 tok/s
+step 125/1500 | loss 1.5624 | aux 1.003 | 9,319 tok/s
+step 150/1500 | loss 1.5639 | aux 1.003 | 11,687 tok/s
+step 175/1500 | loss 1.6211 | aux 1.003 | 11,688 tok/s
+step 200/1500 | loss 1.5190 | aux 1.002 | 11,725 tok/s
+step 225/1500 | loss 1.5405 | aux 1.004 | 13,157 tok/s
+step 250/1500 | loss 1.5172 | aux 1.003 | 11,461 tok/s
+step 250 | val 1.7382 | aux 1.003
+step 275/1500 | loss 1.5162 | aux 1.003 | 12,656 tok/s
+step 300/1500 | loss 1.6115 | aux 1.003 | 12,486 tok/s
+step 325/1500 | loss 1.5704 | aux 1.002 | 11,162 tok/s
+step 350/1500 | loss 1.5407 | aux 1.004 | 11,018 tok/s
+step 375/1500 | loss 1.5630 | aux 1.003 | 10,167 tok/s
+step 400/1500 | loss 1.5258 | aux 1.001 | 9,713 tok/s
+step 425/1500 | loss 1.4657 | aux 1.002 | 9,155 tok/s
+step 450/1500 | loss 1.5012 | aux 1.002 | 7,863 tok/s
+step 475/1500 | loss 1.4708 | aux 1.001 | 11,575 tok/s
+step 500/1500 | loss 1.5368 | aux 1.004 | 12,091 tok/s
+step 500 | val 1.6983 | aux 1.004
+step 525/1500 | loss 1.5236 | aux 1.001 | 13,004 tok/s
+step 550/1500 | loss 1.4578 | aux 1.001 | 13,804 tok/s
+step 575/1500 | loss 1.5475 | aux 1.003 | 13,222 tok/s
+step 600/1500 | loss 1.5207 | aux 1.002 | 10,325 tok/s
+step 625/1500 | loss 1.4108 | aux 1.002 | 11,934 tok/s
+step 650/1500 | loss 1.4228 | aux 1.001 | 9,855 tok/s
+step 675/1500 | loss 1.5253 | aux 1.002 | 10,005 tok/s
+step 700/1500 | loss 1.5130 | aux 1.003 | 9,222 tok/s
+step 725/1500 | loss 1.4713 | aux 1.002 | 11,055 tok/s
+step 750/1500 | loss 1.4422 | aux 1.001 | 10,090 tok/s
+step 750 | val 1.6494 | aux 1.001
+step 775/1500 | loss 1.4753 | aux 1.002 | 5,814 tok/s
+step 800/1500 | loss 1.4140 | aux 1.002 | 7,763 tok/s
+step 825/1500 | loss 1.4847 | aux 1.002 | 12,809 tok/s
+step 850/1500 | loss 1.4550 | aux 1.002 | 14,970 tok/s
+step 875/1500 | loss 1.4230 | aux 1.001 | 5,688 tok/s
+step 900/1500 | loss 1.3818 | aux 1.003 | 3,561 tok/s
+step 925/1500 | loss 1.3749 | aux 1.002 | 1,473 tok/s
+step 950/1500 | loss 1.4305 | aux 1.001 | 14,569 tok/s
+step 975/1500 | loss 1.4181 | aux 1.000 | 12,812 tok/s
+step 1000/1500 | loss 1.4085 | aux 1.000 | 3,500 tok/s
+step 1000 | val 1.6166 | aux 1.000
+step 1025/1500 | loss 1.3948 | aux 1.001 | 14,652 tok/s
+step 1050/1500 | loss 1.3661 | aux 1.001 | 11,140 tok/s
+step 1075/1500 | loss 1.4458 | aux 1.000 | 11,882 tok/s
+step 1100/1500 | loss 1.4537 | aux 1.001 | 3,540 tok/s
+step 1125/1500 | loss 1.3896 | aux 1.001 | 11,513 tok/s
+step 1150/1500 | loss 1.4426 | aux 1.001 | 9,771 tok/s
+step 1175/1500 | loss 1.3823 | aux 1.000 | 5,372 tok/s
+step 1200/1500 | loss 1.4016 | aux 1.001 | 1,569 tok/s
+step 1225/1500 | loss 1.4178 | aux 1.001 | 14,651 tok/s
+step 1250/1500 | loss 1.4570 | aux 1.000 | 10,788 tok/s
+step 1250 | val 1.5849 | aux 1.001
+step 1275/1500 | loss 1.3451 | aux 1.000 | 4,461 tok/s
+step 1300/1500 | loss 1.3860 | aux 1.000 | 14,155 tok/s
+step 1325/1500 | loss 1.3550 | aux 1.000 | 8,597 tok/s
+step 1350/1500 | loss 1.3521 | aux 1.000 | 14,319 tok/s
+step 1375/1500 | loss 1.3791 | aux 1.000 | 11,762 tok/s
+step 1400/1500 | loss 1.3620 | aux 1.000 | 4,358 tok/s
+step 1425/1500 | loss 1.3291 | aux 1.000 | 14,402 tok/s
+step 1450/1500 | loss 1.3095 | aux 1.000 | 4,810 tok/s
+step 1475/1500 | loss 1.3476 | aux 1.000 | 14,612 tok/s
+step 1500/1500 | loss 1.3020 | aux 1.000 | 4,827 tok/s
+step 1500 | val 1.5703 | aux 1.000
+{
+  "initial_val_loss": 1.660255926847458,
+  "final_train_loss": 1.3534364295005799,
+  "final_val_loss": 1.570295548439026,
+  "tokens_per_s": 8285.649342818837,
+  "wall_s": 6864.882301807404
+}
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/moe_upcycle.yaml
+Overriding config with CLI args: ['run.name=sweep_e16_k2', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'init.from_ckpt=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt', 'train.steps=1500', 'moe.n_experts=16', 'moe.top_k=2']
+number of parameters: 0.80M
+number of parameters: 0.80M
+[sweep_e16_k2] MoE E=16 k=2 layers=[0, 1, 2, 3] init=upcycle params total=8.685M active=1.345M B=32 T=128 steps=1500 lr=5.0e-04 device=cpu
+step 0 | val 1.6603 | aux 1.124
+step 25/1500 | loss 1.5051 | aux 1.102 | 10,382 tok/s
+step 50/1500 | loss 1.5754 | aux 1.328 | 10,648 tok/s
+step 75/1500 | loss 1.5393 | aux 1.668 | 10,276 tok/s
+step 100/1500 | loss 1.5477 | aux 1.773 | 9,785 tok/s
+step 125/1500 | loss 1.5224 | aux 1.846 | 6,498 tok/s
+step 150/1500 | loss 1.4879 | aux 1.844 | 8,895 tok/s
+step 175/1500 | loss 1.5605 | aux 1.969 | 9,362 tok/s
+step 200/1500 | loss 1.4722 | aux 1.977 | 9,716 tok/s
+step 225/1500 | loss 1.4903 | aux 2.018 | 7,365 tok/s
+step 250/1500 | loss 1.4606 | aux 2.005 | 8,824 tok/s
+step 250 | val 1.6860 | aux 2.010
+step 275/1500 | loss 1.4570 | aux 2.012 | 9,277 tok/s
+step 300/1500 | loss 1.5737 | aux 2.077 | 8,134 tok/s
+step 325/1500 | loss 1.5159 | aux 2.024 | 7,921 tok/s
+step 350/1500 | loss 1.4604 | aux 2.057 | 6,178 tok/s
+step 375/1500 | loss 1.4863 | aux 2.118 | 6,820 tok/s
+step 400/1500 | loss 1.4586 | aux 2.111 | 7,748 tok/s
+step 425/1500 | loss 1.4147 | aux 2.124 | 8,062 tok/s
+step 450/1500 | loss 1.4327 | aux 2.163 | 7,387 tok/s
+step 475/1500 | loss 1.4140 | aux 2.086 | 5,454 tok/s
+step 500/1500 | loss 1.4876 | aux 2.065 | 8,663 tok/s
+step 500 | val 1.6482 | aux 2.074
+step 525/1500 | loss 1.4661 | aux 2.151 | 8,477 tok/s
+step 550/1500 | loss 1.4059 | aux 2.133 | 6,591 tok/s
+step 575/1500 | loss 1.4839 | aux 2.149 | 7,725 tok/s
+step 600/1500 | loss 1.4651 | aux 2.136 | 7,139 tok/s
+step 625/1500 | loss 1.3531 | aux 2.111 | 5,812 tok/s
+step 650/1500 | loss 1.3461 | aux 2.106 | 6,817 tok/s
+step 675/1500 | loss 1.4439 | aux 2.115 | 7,569 tok/s
+step 700/1500 | loss 1.4476 | aux 2.089 | 7,477 tok/s
+step 725/1500 | loss 1.4024 | aux 2.099 | 6,158 tok/s
+step 750/1500 | loss 1.3934 | aux 2.047 | 6,492 tok/s
+step 750 | val 1.5999 | aux 2.035
+step 775/1500 | loss 1.4121 | aux 1.949 | 6,724 tok/s
+step 800/1500 | loss 1.3545 | aux 1.980 | 8,072 tok/s
+step 825/1500 | loss 1.4163 | aux 1.947 | 7,265 tok/s
+step 850/1500 | loss 1.3804 | aux 1.919 | 7,131 tok/s
+step 875/1500 | loss 1.3853 | aux 1.901 | 7,435 tok/s
+step 900/1500 | loss 1.3330 | aux 1.877 | 7,983 tok/s
+step 925/1500 | loss 1.3143 | aux 1.820 | 8,356 tok/s
+step 950/1500 | loss 1.3863 | aux 1.843 | 8,002 tok/s
+step 975/1500 | loss 1.3675 | aux 1.827 | 7,263 tok/s
+step 1000/1500 | loss 1.3442 | aux 1.797 | 7,992 tok/s
+step 1000 | val 1.5728 | aux 1.791
+step 1025/1500 | loss 1.3370 | aux 1.790 | 7,807 tok/s
+step 1050/1500 | loss 1.3211 | aux 1.776 | 8,022 tok/s
+step 1075/1500 | loss 1.3926 | aux 1.731 | 7,887 tok/s
+step 1100/1500 | loss 1.4016 | aux 1.724 | 7,496 tok/s
+step 1125/1500 | loss 1.3322 | aux 1.691 | 8,070 tok/s
+step 1150/1500 | loss 1.3864 | aux 1.669 | 8,182 tok/s
+step 1175/1500 | loss 1.3251 | aux 1.665 | 7,929 tok/s
+step 1200/1500 | loss 1.3554 | aux 1.647 | 7,981 tok/s
+step 1225/1500 | loss 1.3624 | aux 1.626 | 7,963 tok/s
+step 1250/1500 | loss 1.3982 | aux 1.603 | 7,996 tok/s
+step 1250 | val 1.5535 | aux 1.605
+step 1275/1500 | loss 1.2961 | aux 1.592 | 7,750 tok/s
+step 1300/1500 | loss 1.3424 | aux 1.555 | 8,066 tok/s
+step 1325/1500 | loss 1.2931 | aux 1.557 | 7,872 tok/s
+step 1350/1500 | loss 1.2996 | aux 1.554 | 7,575 tok/s
+step 1375/1500 | loss 1.3303 | aux 1.535 | 6,041 tok/s
+step 1400/1500 | loss 1.3070 | aux 1.527 | 7,033 tok/s
+step 1425/1500 | loss 1.2983 | aux 1.539 | 5,252 tok/s
+step 1450/1500 | loss 1.2649 | aux 1.515 | 6,819 tok/s
+step 1475/1500 | loss 1.2967 | aux 1.512 | 8,650 tok/s
+step 1500/1500 | loss 1.2516 | aux 1.493 | 8,485 tok/s
+step 1500 | val 1.5427 | aux 1.495
+{
+  "initial_val_loss": 1.6602559447288514,
+  "final_train_loss": 1.30567302942276,
+  "final_val_loss": 1.542728018760681,
+  "tokens_per_s": 7615.135320783072,
+  "wall_s": 842.0958771705627
+}
+Overriding config with /Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/config/moe_upcycle.yaml
+Overriding config with CLI args: ['run.name=sweep_e8_k2_every2', 'run.out_dir=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs', 'init.from_ckpt=/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt', 'train.steps=1500', 'moe.n_experts=8', 'moe.top_k=2', 'moe.moe_every=2']
+number of parameters: 0.80M
+number of parameters: 0.80M
+[sweep_e8_k2_every2] MoE E=8 k=2 layers=[1, 3] init=upcycle params total=2.649M active=1.076M B=32 T=128 steps=1500 lr=5.0e-04 device=cpu
+step 0 | val 1.6603 | aux 1.109
+step 25/1500 | loss 1.5037 | aux 1.030 | 10,727 tok/s
+step 50/1500 | loss 1.5681 | aux 1.088 | 13,469 tok/s
+step 75/1500 | loss 1.5339 | aux 1.141 | 11,164 tok/s
+step 100/1500 | loss 1.5375 | aux 1.142 | 9,337 tok/s
+step 125/1500 | loss 1.5189 | aux 1.209 | 10,864 tok/s
+step 150/1500 | loss 1.4903 | aux 1.191 | 8,342 tok/s
+step 175/1500 | loss 1.5529 | aux 1.278 | 11,450 tok/s
+step 200/1500 | loss 1.4771 | aux 1.278 | 11,191 tok/s
+step 225/1500 | loss 1.4808 | aux 1.289 | 10,667 tok/s
+step 250/1500 | loss 1.4512 | aux 1.322 | 11,471 tok/s
+step 250 | val 1.6846 | aux 1.322
+step 275/1500 | loss 1.4554 | aux 1.328 | 11,315 tok/s
+step 300/1500 | loss 1.5667 | aux 1.331 | 11,882 tok/s
+step 325/1500 | loss 1.5192 | aux 1.298 | 13,074 tok/s
+step 350/1500 | loss 1.4650 | aux 1.367 | 9,839 tok/s
+step 375/1500 | loss 1.4927 | aux 1.376 | 11,912 tok/s
+step 400/1500 | loss 1.4651 | aux 1.333 | 12,071 tok/s
+step 425/1500 | loss 1.4306 | aux 1.342 | 12,386 tok/s
+step 450/1500 | loss 1.4389 | aux 1.321 | 13,570 tok/s
+step 475/1500 | loss 1.4123 | aux 1.374 | 14,161 tok/s
+step 500/1500 | loss 1.4905 | aux 1.396 | 14,005 tok/s
+step 500 | val 1.6499 | aux 1.403
+step 525/1500 | loss 1.4763 | aux 1.369 | 13,239 tok/s
+step 550/1500 | loss 1.4043 | aux 1.304 | 12,218 tok/s
+step 575/1500 | loss 1.4897 | aux 1.361 | 12,000 tok/s
+step 600/1500 | loss 1.4621 | aux 1.332 | 12,419 tok/s
+step 625/1500 | loss 1.3584 | aux 1.335 | 12,306 tok/s
+step 650/1500 | loss 1.3644 | aux 1.314 | 13,147 tok/s
+step 675/1500 | loss 1.4551 | aux 1.322 | 11,391 tok/s
+step 700/1500 | loss 1.4526 | aux 1.337 | 14,082 tok/s
+step 725/1500 | loss 1.4133 | aux 1.316 | 11,862 tok/s
+step 750/1500 | loss 1.4035 | aux 1.281 | 13,275 tok/s
+step 750 | val 1.6105 | aux 1.288
+step 775/1500 | loss 1.4248 | aux 1.283 | 14,210 tok/s
+step 800/1500 | loss 1.3740 | aux 1.269 | 13,941 tok/s
+step 825/1500 | loss 1.4321 | aux 1.233 | 14,271 tok/s
+step 850/1500 | loss 1.3991 | aux 1.247 | 13,926 tok/s
+step 875/1500 | loss 1.3897 | aux 1.247 | 13,547 tok/s
+step 900/1500 | loss 1.3416 | aux 1.214 | 14,082 tok/s
+step 925/1500 | loss 1.3304 | aux 1.216 | 14,420 tok/s
+step 950/1500 | loss 1.4038 | aux 1.229 | 13,028 tok/s
+step 975/1500 | loss 1.3760 | aux 1.211 | 12,119 tok/s
+step 1000/1500 | loss 1.3647 | aux 1.197 | 14,408 tok/s
+step 1000 | val 1.5862 | aux 1.198
+step 1025/1500 | loss 1.3585 | aux 1.187 | 12,796 tok/s
+step 1050/1500 | loss 1.3416 | aux 1.190 | 13,473 tok/s
+step 1075/1500 | loss 1.4198 | aux 1.175 | 12,383 tok/s
+step 1100/1500 | loss 1.4243 | aux 1.164 | 13,806 tok/s
+step 1125/1500 | loss 1.3436 | aux 1.150 | 12,938 tok/s
+step 1150/1500 | loss 1.4051 | aux 1.130 | 13,980 tok/s
+step 1175/1500 | loss 1.3492 | aux 1.133 | 12,465 tok/s
+step 1200/1500 | loss 1.3689 | aux 1.123 | 13,707 tok/s
+step 1225/1500 | loss 1.3869 | aux 1.109 | 11,311 tok/s
+step 1250/1500 | loss 1.4233 | aux 1.107 | 12,152 tok/s
+step 1250 | val 1.5612 | aux 1.109
+step 1275/1500 | loss 1.3211 | aux 1.100 | 6,996 tok/s
+step 1300/1500 | loss 1.3656 | aux 1.086 | 12,226 tok/s
+step 1325/1500 | loss 1.3322 | aux 1.078 | 12,950 tok/s
+step 1350/1500 | loss 1.3215 | aux 1.078 | 13,106 tok/s
+step 1375/1500 | loss 1.3517 | aux 1.069 | 13,471 tok/s
+step 1400/1500 | loss 1.3409 | aux 1.068 | 11,427 tok/s
+step 1425/1500 | loss 1.3165 | aux 1.069 | 14,203 tok/s
+step 1450/1500 | loss 1.2874 | aux 1.062 | 13,070 tok/s
+step 1475/1500 | loss 1.3170 | aux 1.062 | 13,241 tok/s
+step 1500/1500 | loss 1.2766 | aux 1.058 | 12,692 tok/s
+step 1500 | val 1.5496 | aux 1.060
+{
+  "initial_val_loss": 1.6602559208869934,
+  "final_train_loss": 1.3269110941886901,
+  "final_val_loss": 1.5496022641658782,
+  "tokens_per_s": 12196.83454382582,
+  "wall_s": 528.402193069458
+}
+
+===== report =====
+# Assignment 14 results
+
+Generated by `report.py` from `results/runs/`.
+
+## Main runs
+
+| run | model | init | steps | total params | active params | start val | final train | final val | tokens/s | wall (min) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| dense | dense | scratch | 2000 | 0.812M | 0.812M | 4.1809 | 1.4772 | **1.6603** | 15,782 | 8.9 |
+| dense_continue | dense | resume | 1500 | 0.812M | 0.812M | 1.6603 | 1.3680 | **1.5775** | 20,112 | 5.3 |
+| moe_upcycle | E=8 k=2 | upcycle | 1500 | 4.486M | 1.341M | 1.6603 | 1.3106 | **1.5367** | 9,668 | 11.1 |
+| moe_scratch | E=8 k=2 | scratch | 3500 | 4.486M | 1.341M | 4.1842 | 1.2317 | **1.5016** | 10,457 | 23.9 |
+| dense_wide | dense (8C FFN) | scratch | 3500 | 1.337M | 1.337M | 4.1716 | 1.3232 | **1.5474** | 13,039 | 26.0 |
+
+## Upcycling sweep (phase 2, same budget as `moe_upcycle`)
+
+| run | model | init | steps | total params | active params | start val | final train | final val | tokens/s | wall (min) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| moe_upcycle | E=8 k=2 | upcycle | 1500 | 4.486M | 1.341M | 1.6603 | 1.3106 | **1.5367** | 9,668 | 11.1 |
+| sweep_e16_k2 | E=16 k=2 | upcycle | 1500 | 8.685M | 1.345M | 1.6603 | 1.3057 | **1.5427** | 7,615 | 14.0 |
+| sweep_e4_k1 | E=4 k=1 | upcycle | 1500 | 2.387M | 0.814M | 1.6603 | 1.3540 | **1.5671** | 10,730 | 9.9 |
+| sweep_e8_k1 | E=8 k=1 | upcycle | 1500 | 4.486M | 0.816M | 1.6603 | 1.3534 | **1.5703** | 8,286 | 114.4 |
+| sweep_e8_k2_every2 | E=8 k=2 every 2 | upcycle | 1500 | 2.649M | 1.076M | 1.6603 | 1.3269 | **1.5496** | 12,197 | 8.8 |
+
+## Routing at the final eval
+
+| run | aux (load-balance) loss | max expert load (x uniform) | min expert load (x uniform) | dropped |
+|---|---|---|---|---|
+| moe_upcycle | 1.4027 | 4.00 | 0.19 | 0.0% |
+| moe_scratch | 1.0769 | 2.88 | 0.22 | 0.0% |
+| sweep_e16_k2 | 1.4954 | 8.00 | 0.02 | 0.0% |
+| sweep_e4_k1 | 1.0002 | 1.11 | 0.91 | 0.0% |
+| sweep_e8_k1 | 1.0005 | 1.19 | 0.91 | 0.0% |
+| sweep_e8_k2_every2 | 1.0599 | 2.99 | 0.34 | 0.0% |
+
+## Samples
+
+- **dense** (prompt 'ROMEO:'): "ROMEO:\nHer sweet, this gives this honest.\n\nSICINIUS:\nGo, and for the hall fear one a person'd;\nThink the both it of the more of honour,\nAnd hath hollow'd with to the rough them.\n\nAUTOLYCUS:\nMus good spite t"
+- **dense_continue** (prompt 'ROMEO:'): "ROMEO:\nHere's still in the shall should when be these\nwith my grief disphant help it person'd;\nThe crample, we thought oft a pirceed?\nAway that, what I may rest, the royal pardon,\nWith a grieve to smore my "
+- **moe_upcycle** (prompt 'ROMEO:'): "ROMEO:\nHere's still in the thrust hath made of the\nsorrow. Let him the lives of this person,\nCourin hath between here private in perlace.\nWithin he leaver urged as the love,\nAnd to curse and he do small me "
+- **moe_scratch** (prompt 'ROMEO:'): "ROMEO:\nHere's such first,\nStand upon the heads of common and flinted,\nThe fearing is here and the fire of this\nThan the more cheek blood is his thoughts with\nAt a blow of many seat in his souls down.\nThere "
+- **dense_wide** (prompt 'ROMEO:'): "ROMEO:\nHere's still in they have shown me.\n\nRICHARD:\nGood God's sake, and fear?\n\nNORFOLK:\nCan the first like a troops of trave the clouds,\nAnd stand the run of Warwicks too, I'll not it:\nThou hast smoting n"
+
+## Plots
+
+![val_loss](plots/val_loss.png)
+![expert_utilization](plots/expert_utilization.png)
+![upcycle_sweep](plots/upcycle_sweep.png)
+

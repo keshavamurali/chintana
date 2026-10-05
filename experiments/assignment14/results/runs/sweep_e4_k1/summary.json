@@ -1,0 +1,111 @@
+{
+  "name": "sweep_e4_k1",
+  "init": "upcycle",
+  "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt",
+  "moe_layers": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_experts": 4,
+  "top_k": 1,
+  "params_total": 2387200,
+  "params_active": 814336,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 1500,
+  "tokens": 6144000,
+  "peak_lr": 0.0005,
+  "initial_val_loss": 1.6602559208869934,
+  "final_train_loss": 1.3539988207817077,
+  "final_val_loss": 1.567149466276169,
+  "tokens_per_s": 10730.201571633466,
+  "wall_s": 593.4123890399933,
+  "device": "cpu",
+  "final_expert_frac": [
+    [
+      0.2777954041957855,
+      0.240875244140625,
+      0.227874755859375,
+      0.2534545958042145
+    ],
+    [
+      0.24075928330421448,
+      0.249847412109375,
+      0.25982666015625,
+      0.24956664443016052
+    ],
+    [
+      0.237091064453125,
+      0.24475708603858948,
+      0.273651123046875,
+      0.24450072646141052
+    ],
+    [
+      0.25477296113967896,
+      0.24566039443016052,
+      0.24958495795726776,
+      0.24998168647289276
+    ]
+  ],
+  "final_aux_loss": 1.0001619935035706,
+  "final_drop_frac": 0.0,
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHer sweet, could my burning she must of themselves.\n\nSTANLONUE:\nMiserah, well here have you that lift sit be the mork,\nAnd than we will stay leave with to the rod\nUntalks: this war it us no smake?\n\nP",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 4,
+      "top_k": 1,
+      "expert_hidden": 0,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "upcycle",
+      "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt"
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 1500,
+      "lr": 0.0005,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 50,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "sweep_e4_k1",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

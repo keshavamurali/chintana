@@ -1,0 +1,105 @@
+{
+  "name": "sweep_e8_k2_every2",
+  "init": "upcycle",
+  "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt",
+  "moe_layers": [
+    1,
+    3
+  ],
+  "n_experts": 8,
+  "top_k": 2,
+  "params_total": 2649344,
+  "params_active": 1076480,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 1500,
+  "tokens": 6144000,
+  "peak_lr": 0.0005,
+  "initial_val_loss": 1.6602559208869934,
+  "final_train_loss": 1.3269110941886901,
+  "final_val_loss": 1.5496022641658782,
+  "tokens_per_s": 12196.83454382582,
+  "wall_s": 528.402193069458,
+  "device": "cpu",
+  "final_expert_frac": [
+    [
+      0.06735534965991974,
+      0.11871643364429474,
+      0.177459716796875,
+      0.05016784742474556,
+      0.11910095065832138,
+      0.04191894456744194,
+      0.05132140964269638,
+      0.37395936250686646
+    ],
+    [
+      0.14765319228172302,
+      0.16240844130516052,
+      0.1294708251953125,
+      0.09919128566980362,
+      0.11242981255054474,
+      0.1080169677734375,
+      0.12917785346508026,
+      0.11165161430835724
+    ]
+  ],
+  "final_aux_loss": 1.0599023640155791,
+  "final_drop_frac": 0.0,
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHer she time in they stands she may for and\nTower and friends half a fellow and graves\nthe flight both in her speak and repent:\nThe provoked all or renought the love,\nAnd to curse from him her and by",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 8,
+      "top_k": 2,
+      "expert_hidden": 0,
+      "moe_every": 2,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "upcycle",
+      "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt"
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 1500,
+      "lr": 0.0005,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 50,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "sweep_e8_k2_every2",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

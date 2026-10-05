@@ -1,0 +1,78 @@
+{
+  "name": "dense_continue",
+  "init": "resume",
+  "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt",
+  "moe_layers": [],
+  "n_experts": 0,
+  "top_k": 0,
+  "params_total": 812288,
+  "params_active": 812288,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 1500,
+  "tokens": 6144000,
+  "peak_lr": 0.0005,
+  "initial_val_loss": 1.660255926847458,
+  "final_train_loss": 1.367961299419403,
+  "final_val_loss": 1.5774996101856231,
+  "tokens_per_s": 20111.815159440554,
+  "wall_s": 316.45093178749084,
+  "device": "cpu",
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHere's still in the shall should when be these\nwith my grief disphant help it person'd;\nThe crample, we thought oft a pirceed?\nAway that, what I may rest, the royal pardon,\nWith a grieve to smore my ",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 0,
+      "top_k": 2,
+      "expert_hidden": 0,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "resume",
+      "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt"
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 1500,
+      "lr": 0.0005,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 50,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "dense_continue",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

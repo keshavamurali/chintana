@@ -1,0 +1,12 @@
+# Reference: the same MoE architecture as moe_upcycle.yaml, trained from a random
+# init for the full phase-1 + phase-2 step budget (2000 + 1500).
+moe:
+  n_experts: 8
+  top_k: 2
+  moe_every: 1
+train:
+  steps: 3500
+  lr: 1.0e-3
+  warmup_steps: 100
+run:
+  name: moe_scratch

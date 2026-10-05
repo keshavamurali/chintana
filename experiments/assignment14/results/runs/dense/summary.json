@@ -1,0 +1,78 @@
+{
+  "name": "dense",
+  "init": "scratch",
+  "from_ckpt": "",
+  "moe_layers": [],
+  "n_experts": 0,
+  "top_k": 0,
+  "params_total": 812288,
+  "params_active": 812288,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 2000,
+  "tokens": 8192000,
+  "peak_lr": 0.001,
+  "initial_val_loss": 4.180854368209839,
+  "final_train_loss": 1.4772398591041564,
+  "final_val_loss": 1.660255926847458,
+  "tokens_per_s": 15781.541799545239,
+  "wall_s": 536.6279671192169,
+  "device": "cpu",
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHer sweet, this gives this honest.\n\nSICINIUS:\nGo, and for the hall fear one a person'd;\nThink the both it of the more of honour,\nAnd hath hollow'd with to the rough them.\n\nAUTOLYCUS:\nMus good spite t",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 0,
+      "top_k": 2,
+      "expert_hidden": 0,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "scratch",
+      "from_ckpt": ""
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 2000,
+      "lr": 0.001,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 100,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "dense",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

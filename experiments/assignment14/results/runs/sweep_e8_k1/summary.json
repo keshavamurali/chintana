@@ -1,0 +1,127 @@
+{
+  "name": "sweep_e8_k1",
+  "init": "upcycle",
+  "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt",
+  "moe_layers": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_experts": 8,
+  "top_k": 1,
+  "params_total": 4486400,
+  "params_active": 816384,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 1500,
+  "tokens": 6144000,
+  "peak_lr": 0.0005,
+  "initial_val_loss": 1.660255926847458,
+  "final_train_loss": 1.3534364295005799,
+  "final_val_loss": 1.570295548439026,
+  "tokens_per_s": 8285.649342818837,
+  "wall_s": 6864.882301807404,
+  "device": "cpu",
+  "final_expert_frac": [
+    [
+      0.12358398735523224,
+      0.136138916015625,
+      0.11417236179113388,
+      0.12212524563074112,
+      0.12847289443016052,
+      0.12848511338233948,
+      0.12498779594898224,
+      0.12203369289636612
+    ],
+    [
+      0.14835205674171448,
+      0.11981811374425888,
+      0.13494873046875,
+      0.11431884765625,
+      0.11582031100988388,
+      0.12798461318016052,
+      0.11926879733800888,
+      0.11948852241039276
+    ],
+    [
+      0.139068603515625,
+      0.12290038913488388,
+      0.13251952826976776,
+      0.11809692531824112,
+      0.12363281100988388,
+      0.12251587212085724,
+      0.124725341796875,
+      0.11654052883386612
+    ],
+    [
+      0.12456054985523224,
+      0.13383789360523224,
+      0.13323974609375,
+      0.11959228664636612,
+      0.12766113877296448,
+      0.117889404296875,
+      0.11838988959789276,
+      0.12482909858226776
+    ]
+  ],
+  "final_aux_loss": 1.0004553258419038,
+  "final_drop_frac": 0.0,
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHere's still in they stands she must before\nTo with my grace disping and will present.\n\nELBOW:\nMy brother should be chere perfected and stand law,\nWhich or be rough the seat curse from him is spile,\n",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 8,
+      "top_k": 1,
+      "expert_hidden": 0,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "upcycle",
+      "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt"
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 1500,
+      "lr": 0.0005,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 50,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "sweep_e8_k1",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "name": "moe_upcycle",
+  "init": "upcycle",
+  "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt",
+  "moe_layers": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_experts": 8,
+  "top_k": 2,
+  "params_total": 4486400,
+  "params_active": 1340672,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 1500,
+  "tokens": 6144000,
+  "peak_lr": 0.0005,
+  "initial_val_loss": 1.6602559208869934,
+  "final_train_loss": 1.3106458830833434,
+  "final_val_loss": 1.536727750301361,
+  "tokens_per_s": 9668.105793146791,
+  "wall_s": 666.057464838028,
+  "device": "cpu",
+  "final_expert_frac": [
+    [
+      0.04532776027917862,
+      0.13247986137866974,
+      0.02355041541159153,
+      0.06888122856616974,
+      0.17171020805835724,
+      0.02567443810403347,
+      0.03237609937787056,
+      0.5
+    ],
+    [
+      0.06005859375,
+      0.5,
+      0.02329101599752903,
+      0.088836669921875,
+      0.04810485988855362,
+      0.11065063625574112,
+      0.12091980129480362,
+      0.04813842847943306
+    ],
+    [
+      0.268411248922348,
+      0.08722839504480362,
+      0.15462341904640198,
+      0.1046905517578125,
+      0.02541198767721653,
+      0.1423797607421875,
+      0.17420653998851776,
+      0.04304809495806694
+    ],
+    [
+      0.16051635146141052,
+      0.0678863525390625,
+      0.1188812255859375,
+      0.20244750380516052,
+      0.16074219346046448,
+      0.05172424390912056,
+      0.10571899265050888,
+      0.13208313286304474
+    ]
+  ],
+  "final_aux_loss": 1.4027136325836183,
+  "final_drop_frac": 0.0,
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHere's still in the thrust hath made of the\nsorrow. Let him the lives of this person,\nCourin hath between here private in perlace.\nWithin he leaver urged as the love,\nAnd to curse and he do small me ",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 8,
+      "top_k": 2,
+      "expert_hidden": 0,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "upcycle",
+      "from_ckpt": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs/dense/ckpt.pt"
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 1500,
+      "lr": 0.0005,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 50,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "moe_upcycle",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

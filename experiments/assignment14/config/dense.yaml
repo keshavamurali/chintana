@@ -1,0 +1,10 @@
+# Phase 1: the dense ("Linear" FFN) model -- a plain chintana GPT.
+# Model (4 x d=128, 0.8M params) and the remaining defaults live in ../common.py.
+moe:
+  n_experts: 0            # 0 -> no MoE layers: every block keeps its dense MLP
+train:
+  steps: 2000
+  lr: 1.0e-3
+  warmup_steps: 100
+run:
+  name: dense

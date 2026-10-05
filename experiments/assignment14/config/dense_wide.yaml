@@ -1,0 +1,18 @@
+# Reference: a dense model with the same *active* parameters (and FFN FLOPs per
+# token) as the 8-expert top-2 MoE. A single expert whose hidden layer is 8C
+# wide is just a dense MLP twice as wide as chintana's 4C one (the 1-way router
+# is a constant softmax = 1 and gets no gradient), so this reuses the MoE code
+# path instead of editing chintana's MLP.
+# If you change model.n_embd or the MoE top_k, set expert_hidden = top_k * 4 * n_embd.
+moe:
+  n_experts: 1
+  top_k: 1
+  expert_hidden: 1024     # 8 * n_embd (n_embd = 128): = top_k(2) x the dense 4C MLP
+  aux_loss_coef: 0.0
+  z_loss_coef: 0.0
+train:
+  steps: 3500
+  lr: 1.0e-3
+  warmup_steps: 100
+run:
+  name: dense_wide

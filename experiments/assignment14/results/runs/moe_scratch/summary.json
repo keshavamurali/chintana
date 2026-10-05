@@ -1,0 +1,127 @@
+{
+  "name": "moe_scratch",
+  "init": "scratch",
+  "from_ckpt": "",
+  "moe_layers": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_experts": 8,
+  "top_k": 2,
+  "params_total": 4486400,
+  "params_active": 1340672,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 3500,
+  "tokens": 14336000,
+  "peak_lr": 0.001,
+  "initial_val_loss": 4.184153771400451,
+  "final_train_loss": 1.2316987228393554,
+  "final_val_loss": 1.5015735268592834,
+  "tokens_per_s": 10457.063013318973,
+  "wall_s": 1432.4584460258484,
+  "device": "cpu",
+  "final_expert_frac": [
+    [
+      0.12066040188074112,
+      0.02699890173971653,
+      0.11490478366613388,
+      0.05141906812787056,
+      0.3599700927734375,
+      0.159454345703125,
+      0.09133605659008026,
+      0.07525634765625
+    ],
+    [
+      0.23810425400733948,
+      0.11083984375,
+      0.09953613579273224,
+      0.08204345405101776,
+      0.14178466796875,
+      0.08864136040210724,
+      0.1059417724609375,
+      0.13310852646827698
+    ],
+    [
+      0.12468262016773224,
+      0.08580932766199112,
+      0.12749329209327698,
+      0.16456909477710724,
+      0.1448211669921875,
+      0.11683960258960724,
+      0.11639098823070526,
+      0.11939392238855362
+    ],
+    [
+      0.12489929050207138,
+      0.14109496772289276,
+      0.16933593153953552,
+      0.06347350776195526,
+      0.09454955905675888,
+      0.1515350341796875,
+      0.11742553859949112,
+      0.13768616318702698
+    ]
+  ],
+  "final_aux_loss": 1.0768533229827881,
+  "final_drop_frac": 0.0,
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHere's such first,\nStand upon the heads of common and flinted,\nThe fearing is here and the fire of this\nThan the more cheek blood is his thoughts with\nAt a blow of many seat in his souls down.\nThere ",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 8,
+      "top_k": 2,
+      "expert_hidden": 0,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.01,
+      "z_loss_coef": 0.001,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "scratch",
+      "from_ckpt": ""
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 3500,
+      "lr": 0.001,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 100,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "moe_scratch",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}

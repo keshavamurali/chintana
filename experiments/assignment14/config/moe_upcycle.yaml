@@ -1,0 +1,23 @@
+# Phase 2: convert the phase-1 dense model into an MoE (sparse upcycling) and
+# keep training. Every expert starts as a copy of that block's dense MLP, so at
+# step 0 this model computes exactly what the dense model computes.
+# Same steps / lr schedule / data order as dense_continue.yaml.
+init:
+  mode: upcycle
+  from_ckpt: experiments/assignment14/results/runs/dense/ckpt.pt
+moe:
+  n_experts: 8            # experts per MoE layer
+  top_k: 2                # experts per token
+  moe_every: 1            # 1 = every block's MLP becomes an MoE; 2 = every other block
+  normalize_topk: true    # gates of the chosen experts sum to 1 (exact conversion)
+  capacity_factor: 0.0    # 0 = never drop tokens
+  router_jitter: 0.0
+  aux_loss_coef: 0.01
+  z_loss_coef: 0.001
+  upcycle_noise: 0.0
+train:
+  steps: 1500
+  lr: 5.0e-4
+  warmup_steps: 50
+run:
+  name: moe_upcycle

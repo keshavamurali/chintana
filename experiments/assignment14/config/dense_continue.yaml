@@ -1,0 +1,11 @@
+# Phase 2 baseline: keep training the phase-1 dense model, unchanged, for as many
+# steps as the upcycled MoE gets -- the "what if we had not converted" control.
+init:
+  mode: resume
+  from_ckpt: experiments/assignment14/results/runs/dense/ckpt.pt
+train:
+  steps: 1500
+  lr: 5.0e-4
+  warmup_steps: 50
+run:
+  name: dense_continue

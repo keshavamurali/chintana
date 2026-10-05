@@ -1,0 +1,99 @@
+{
+  "name": "dense_wide",
+  "init": "scratch",
+  "from_ckpt": "",
+  "moe_layers": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_experts": 1,
+  "top_k": 1,
+  "params_total": 1337088,
+  "params_active": 1337088,
+  "batch_size": 32,
+  "block_size": 128,
+  "steps": 3500,
+  "tokens": 14336000,
+  "peak_lr": 0.001,
+  "initial_val_loss": 4.1715898513793945,
+  "final_train_loss": 1.3232110905647279,
+  "final_val_loss": 1.547440493106842,
+  "tokens_per_s": 13038.67730730037,
+  "wall_s": 1559.8400299549103,
+  "device": "cpu",
+  "final_expert_frac": [
+    [
+      1.0
+    ],
+    [
+      1.0
+    ],
+    [
+      1.0
+    ],
+    [
+      1.0
+    ]
+  ],
+  "final_aux_loss": 1.0,
+  "final_drop_frac": 0.0,
+  "sample_prompt": "ROMEO:",
+  "sample": "ROMEO:\nHere's still in they have shown me.\n\nRICHARD:\nGood God's sake, and fear?\n\nNORFOLK:\nCan the first like a troops of trave the clouds,\nAnd stand the run of Warwicks too, I'll not it:\nThou hast smoting n",
+  "config": {
+    "model": {
+      "block_size": 128,
+      "vocab_size": 65,
+      "n_layer": 4,
+      "n_head": 4,
+      "n_embd": 128,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "moe": {
+      "n_experts": 1,
+      "top_k": 1,
+      "expert_hidden": 1024,
+      "moe_every": 1,
+      "normalize_topk": true,
+      "capacity_factor": 0.0,
+      "router_jitter": 0.0,
+      "aux_loss_coef": 0.0,
+      "z_loss_coef": 0.0,
+      "upcycle_noise": 0.0
+    },
+    "init": {
+      "mode": "scratch",
+      "from_ckpt": ""
+    },
+    "data": {
+      "dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/data/shakespeare_char",
+      "batch_size": 32
+    },
+    "train": {
+      "steps": 3500,
+      "lr": 0.001,
+      "min_lr_frac": 0.1,
+      "warmup_steps": 100,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "dense_wide",
+      "out_dir": "/Users/keshavamurali/Documents/TSAI/ERAV5/Chintana/experiments/assignment14/results/runs",
+      "device": "auto",
+      "seed": 1337,
+      "log_interval": 25,
+      "eval_interval": 250,
+      "eval_batches": 20,
+      "eval_batch_size": 64,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": true,
+      "sample_tokens": 200,
+      "sample_prompt": "ROMEO:"
+    }
+  }
+}
