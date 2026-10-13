@@ -187,5 +187,13 @@ def main(argv=None):
         print(summary['sample'])
 
 
+# exit status for "this batch does not fit"; run_all.py retries a smaller batch on it
+OOM_EXIT = 75
+
+
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    try:
+        main(sys.argv[1:])
+    except torch.cuda.OutOfMemoryError as e:
+        print(f"CUDA out of memory: {e}", file=sys.stderr)
+        sys.exit(OOM_EXIT)

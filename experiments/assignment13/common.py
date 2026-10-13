@@ -10,6 +10,7 @@ bare arguments -> dotted key=value overrides, e.g.
 
 import inspect
 import math
+import os
 import pickle
 from contextlib import nullcontext
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ from chintana.config import GPTConfig
 from model import RevGPT
 
 HERE = Path(__file__).resolve().parent
-RESULTS_DIR = HERE / "results"
+# A13_RESULTS_DIR lets a run write elsewhere (e.g. Google Drive on Colab) without editing configs
+RESULTS_DIR = Path(os.environ.get("A13_RESULTS_DIR", HERE / "results"))
 DEFAULT_DATA_DIR = str(HERE / "data" / "fineweb_edu")
 
 

@@ -281,6 +281,14 @@ def main():
                _table(["gpu", "variant", "loss head", "max batch", "peak mem at max (GB)", "hit search cap"],
                       [[r["gpu"], r["variant"], r["loss_impl"], r["max_batch"], _gb(r["peak_mb_at_max"]),
                         r["hit_cap"]] for r in mb]), ""]
+    sustained = _read_csv("sustained_batch.csv")
+    if sustained:
+        md += ["## Sustained maximum batch (full training runs)", "",
+               "Each run starts at the one-step maximum from `max_batch.csv` and steps down 5% after "
+               "every out-of-memory exit; the completed row is the batch that sustained a whole run.", "",
+               _table(["run", "variant", "one-step max", "batch tried", "outcome"],
+                      [[r["run"], r["variant"], r["probe_max_batch"], r["batch_size"], r["outcome"]]
+                       for r in sustained]), ""]
     if tput:
         md += ["## Throughput vs batch size", "",
                _table(["variant", "batch", "tokens/s"],

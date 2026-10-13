@@ -16,10 +16,11 @@ for Efficient Training and Fine-Tuning*, [arXiv:2512.02056](https://arxiv.org/ab
 pipeline end to end on a Colab GPU. [`run_all.py`](run_all.py) runs the same pipeline from a
 terminal; its `--preset shakespeare_char` mode produced the results in this README.
 
-> **Results are in section 6.** They come from a complete run on a laptop CPU with the Tiny
-> Shakespeare preset (7.2M-parameter model, 2M characters per run). Section 6.0 lists how that
-> run differs from the assignment spec. The full-scale GPU version (20.1M parameters, 50M
-> FineWeb-Edu tokens) is implemented, but it was not run for this submission (section 7).
+> **Status.** Section 6 is a complete, controlled study on a laptop CPU with the Tiny
+> Shakespeare preset (7.2M-parameter model, 2M characters per run; results in `results_cpu/`).
+> The full-scale run (20.1M parameters, 50M FineWeb-Edu tokens per run, reversible *and*
+> baseline at their sustained maximum batch) runs with the notebook on a Colab GPU. Its results
+> go in `results/` and will be added here as section 7.
 
 ---
 
@@ -137,7 +138,8 @@ scales them down with `config/shakespeare_char.yaml`; section 6.0 lists every di
 | precision | fp16 autocast + `GradScaler` on a T4 (bf16 on Ampere and newer), fp32 master weights; no `torch.compile` |
 | run 1 | `baseline`, batch 64 (32,768 tokens/step), 1,526 steps |
 | run 2 | chosen reversible variant, batch 64, 1,526 steps; same init, data order and schedule as run 1 |
-| run 3 | chosen reversible variant at ~95% of its probed max batch; same 50M tokens, so about 50M/(B·512) steps; lr scaled by √(B/64), capped at 3e-3 |
+| run 3 | chosen reversible variant at its **sustained** maximum batch (starts at the one-step max, steps down 5% per out-of-memory restart until a full run completes); same 50M tokens, so about 50M/(B·512) steps; lr scaled by √(B/64), capped at 3e-3 |
+| run 4 | baseline at its own sustained maximum batch, same procedure and lr scaling; the max-batch comparison partner for run 3 |
 | eval | the same 50 × 32 val windows (0.82M tokens) for every run, 10 evals per run plus step 0 |
 | speed | tokens/s over all training steps after the first 5 (batch sampling + fwd + bwd + optimizer), excluding evals |
 | memory | `torch.cuda.max_memory_allocated` over the run (includes weights, grads and AdamW state) |
@@ -190,20 +192,27 @@ autocast (it adds `cuda_*` rows to `results/summary.md`).
 
 ## 5. How to run
 
-**Colab (optional, full-scale GPU run).** Open `assignment13_colab.ipynb` with a T4 runtime and run all
-cells. It clones this repo, installs `tiktoken omegaconf datasets` on top of Colab's own
-torch, and runs sections 1-9 below, finishing with a zip of `results/`.
+**Colab (the full-scale run).** Open `assignment13_colab.ipynb` with a T4 runtime and run all
+cells. It clones this branch, installs `tiktoken omegaconf datasets` on top of Colab's own
+torch, and runs each `run_all.py` stage in its own cell. Results and the tokenized data are
+written to Google Drive (`MyDrive/chintana_assignment13/`) as they are produced. After a
+disconnect, run all cells again: finished stages are skipped. It ends with a zip of `results/`.
 
 **Terminal, one command (any CUDA machine):**
 ```bash
-python experiments/assignment13/run_all.py                    # data -> check -> screen -> probe -> run1-3 -> report
-python experiments/assignment13/run_all.py --with-run4        # also the optional baseline-at-max-batch run
-python experiments/assignment13/run_all.py --stages run2,run3,report --chosen leapfrog   # resume / re-run stages
+python experiments/assignment13/run_all.py                    # data -> check -> screen -> probe -> run1-4 -> report
+python experiments/assignment13/run_all.py --stages run2,run3,report --chosen leapfrog   # re-run some stages
 ```
 Stages are `data, check, screen, probe, run1, run2, run3, run4, report`. The variant is picked
-from the `screen_*` runs, and run 3's batch from `results/logs/max_batch.csv` (at 95%), unless
-`--chosen` or `--run3-batch` is given. So any stage can be re-run on its own once the earlier
-stages have written their results.
+from the `screen_*` runs (5M tokens each) unless `--chosen` is given.
+
+- **Sustained maximum batch.** Runs 3 and 4 start at the one-step maximum batch from
+  `results/logs/max_batch.csv`. If a run runs out of GPU memory at any point (`train.py` exits
+  with status 75), it restarts 5% smaller, until a whole 50M-token run completes. Every attempt
+  is logged in `results/logs/sustained_batch.csv`.
+- **Resuming.** A stage whose `results/runs/<name>/summary.json` already exists is skipped, so
+  re-running the same command continues after an interruption. `--force` redoes everything.
+- **Results folder.** Set `A13_RESULTS_DIR` to write results somewhere other than `results/`.
 
 **Locally on a CPU (e.g. a laptop), with Tiny Shakespeare: the configuration used for the
 results in section 6.** The FineWeb runs take about
@@ -219,9 +228,10 @@ uv run python experiments/assignment13/run_all.py --preset shakespeare_char
 ```
 This runs `check`, then 0.5M-token screening of all five trunks. Its `probe` stage runs
 `cpu_probe.py`, because `memory_probe.py` needs CUDA. Then come runs 1-2 at batch 16, run 3 at
-batch 64 (lr ×2), and the report. It skips `data`, because the files already exist. Section 6
-has the results of this pipeline. Move `results/` aside before a GPU run so the two
-sets don't mix.
+batch 64 (lr ×2), run 4 (the baseline at the same batch 64), and the report. It skips
+`data`, because the files already exist. Section 6 has the results of this pipeline, stored
+in `results_cpu/`. To write a new CPU run there instead of `results/`, prefix the command with
+`A13_RESULTS_DIR=experiments/assignment13/results_cpu`.
 
 **Terminal, step by step:**
 ```bash
@@ -229,12 +239,14 @@ A=experiments/assignment13
 python $A/prepare_data.py                                   # ~56M FineWeb-Edu tokens
 python $A/check_reversible.py
 for v in baseline midpoint midpoint_a leapfrog hamiltonian; do
-  python $A/train.py rev.variant=$v run.name=screen_$v data.total_tokens=10000000
+  python $A/train.py rev.variant=$v run.name=screen_$v data.total_tokens=5000000
 done
 python $A/memory_probe.py --variants baseline,midpoint     # use the chosen variant
 python $A/train.py $A/config/run1_baseline.yaml
 python $A/train.py $A/config/run2_reversible.yaml rev.variant=midpoint
 python $A/train.py $A/config/run3_reversible_maxbatch.yaml rev.variant=midpoint data.batch_size=<from max_batch.csv>
+python $A/train.py $A/config/run1_baseline.yaml run.name=run4_baseline_maxbatch optim.lr_scaling=sqrt \
+    data.batch_size=<baseline max from max_batch.csv>
 python $A/report.py
 ```
 Scripts import `chintana` from the repo root (`uv run python ...` locally, or
@@ -246,14 +258,14 @@ Scripts import `chintana` from the repo root (`uv run python ...` locally, or
 This section answers the assignment question: **final loss, speed (tokens/s), peak memory
 and other findings**. Everything here was measured on an Intel i7-9750H laptop CPU (6 cores,
 16 GB RAM, fp32) with `run_all.py --preset shakespeare_char`, followed by `cpu_probe.py` for
-memory and controlled speed. The raw numbers are in [`results/summary.md`](results/summary.md),
-`results/runs/` and `results/logs/`.
+memory and controlled speed. The raw numbers are in [`results_cpu/summary.md`](results_cpu/summary.md),
+`results_cpu/runs/` and `results_cpu/logs/`.
 
 ### 6.0 How this run differs from the assignment spec
 
 | | Assignment | This run | Why |
 |---|---|---|---|
-| hardware | Colab GPU | laptop CPU | no GPU used for this submission; the GPU path (notebook) is implemented, see section 7 |
+| hardware | Colab GPU | laptop CPU | a controlled CPU study; the full-scale GPU run is section 7 |
 | data | 50M tokens | Tiny Shakespeare, character level, 1.0M train / 0.11M val characters | 50M tokens would take about 12 h per run on this CPU |
 | model | ~20M params | **7.16M params** (same 9 × 256 trunk; the 65-character vocabulary removes the 12.9M-parameter GPT-2 embedding) | speed; add `model.n_layer=11 model.n_head=6 model.n_embd=384` for a 19.6M character model |
 | tokens per run | 50M | **2M** (about 2 epochs) | speed |
@@ -277,7 +289,7 @@ each other and of the baseline. The screening runs used 0.5M characters each, ba
 | leapfrog (2.6) | 2.4691 | 2.4618 | no |
 | hamiltonian (2.8) | 2.4699 | 2.4618 | no |
 
-![screening](results/plots/screen_val_loss.png)
+![screening](results_cpu/plots/screen_val_loss.png)
 
 `midpoint_a` had the lowest validation loss, so the pipeline's rule chose it for runs 2 and 3.
 Its lead over leapfrog (0.0007) and Hamiltonian (0.0015) is far smaller than what one seed
@@ -293,8 +305,8 @@ for the others) and caught up by 0.2M characters.
 | run 2 | midpoint_a | 16 | 489 | 2.1493 | **2.1952** | +0.011 (+0.5%) |
 | run 3 | midpoint_a | 64 | 123 | 2.4058 | **2.4200** | +0.236 |
 
-![validation loss](results/plots/val_loss.png)
-![training loss](results/plots/train_loss.png)
+![validation loss](results_cpu/plots/val_loss.png)
+![training loss](results_cpu/plots/train_loss.png)
 
 - **Reversibility costs almost nothing in quality.** At the same batch, run 2's training loss
   matches run 1's to 0.0015 and its validation loss is 0.5% higher. The two curves overlap for
@@ -304,7 +316,7 @@ for the others) and caught up by 0.2M characters.
   rate only partly makes up for the missing updates. Run 2 (the same variant at batch 16)
   shows that the reversible model itself trains as well as the baseline.
 - All three runs completed their cosine schedule to the minimum learning rate, and none
-  diverged. Final-step samples (prompt `ROMEO:`) are in `results/summary.md`; all three are
+  diverged. Final-step samples (prompt `ROMEO:`) are in `results_cpu/summary.md`; all three are
   at the "Shakespeare-shaped gibberish" stage expected after 2M characters.
 
 ### 6.3 Peak memory
@@ -330,7 +342,7 @@ All four reversible variants use the same memory: 12.1 / 48.3 / 96.6 MB saved at
 16 / 64 / 128. Midpoint, midpoint_a and leapfrog peak at 132 MB at batch 16, and the
 Hamiltonian at 140 MB, because its backward runs two half-steps.
 
-![memory vs batch](results/plots/cpu_memory_vs_batch.png)
+![memory vs batch](results_cpu/plots/cpu_memory_vs_batch.png)
 
 **Peak memory vs depth** (batch 16), the analogue of the paper's Fig. 3:
 
@@ -339,7 +351,7 @@ Hamiltonian at 140 MB, because its backward runs two half-steps.
 | baseline peak (MB) | 223 | 408 | 591 | 1,142 | 2,153 |
 | midpoint_a peak (MB) | 131 | 132 | 132 | 131 | 130 |
 
-![memory vs depth](results/plots/cpu_memory_vs_depth.png)
+![memory vs depth](results_cpu/plots/cpu_memory_vs_depth.png)
 
 - **Baseline memory grows linearly with depth, at about 60 MB per layer at batch 16. The
   reversible model's memory is flat**: 130–132 MB from 3 to 36 layers. That's the paper's
@@ -367,7 +379,7 @@ of 5 repetitions of 5 timed steps:
 | 16 | **4,532** (3,871–4,636) | **3,616** (3,521–3,775) | **−20%** | +25% |
 | 64 | **4,291** (4,082–4,412) | **3,375** (3,353–3,558) | **−21%** | +27% |
 
-![speed](results/plots/cpu_speed.png)
+![speed](results_cpu/plots/cpu_speed.png)
 
 For reference, the as-logged numbers from the runs were 2,496 (run 1), 2,544 (run 2) and
 2,790 (run 3) tokens/s, with wall-clock times of 14.1, 13.8 and 12.7 minutes.
