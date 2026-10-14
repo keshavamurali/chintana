@@ -57,10 +57,10 @@
   "steps": 69,
   "tokens": 50307072,
   "peak_lr": 0.003,
-  "final_train_loss": 6.886942307154338,
-  "final_val_loss": 6.921304559707641,
-  "tokens_per_s": 40615.26904293871,
-  "wall_s": 1308.2951576709747,
+  "final_train_loss": 6.8858152230580645,
+  "final_val_loss": 6.920225019454956,
+  "tokens_per_s": 43836.451309904995,
+  "wall_s": 1210.3355634212494,
   "diverged": false,
   "device": "Tesla T4",
   "dtype": "float16",
@@ -69,7 +69,7 @@
   "peak_reserved_mb": 14742.0,
   "gpu_total_mb": 14912.6875,
   "sample_prompt": "The meaning of",
-  "sample": "The meaning of the state.\ns at be the end to you with a body.- \" and as a the world and are a other to that the large.\u201c- for.\n he are the be the a many that the a not from a the health the part as the work the use from it are the right",
+  "sample": "The meaning of the state.\ns at be the end to you with a body.- \" and the two and from the few.\n the day for the be the common of for.\n he are the be the a many that the a not from a the health the part as the work the use from it are the right",
   "config": {
     "model": {
       "block_size": 512,
@@ -110,7 +110,7 @@
     },
     "run": {
       "name": "run3_reversible_maxbatch",
-      "out_dir": "/content/chintana/experiments/assignment13/results/runs",
+      "out_dir": "/content/drive/MyDrive/chintana_assignment13/results/runs",
       "device": "auto",
       "dtype": "auto",
       "seed": 1337,

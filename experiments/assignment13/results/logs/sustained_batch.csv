@@ -1,0 +1,5 @@
+run,variant,probe_max_batch,batch_size,outcome
+run3_reversible_maxbatch,midpoint_a,1503,1503,out_of_memory
+run3_reversible_maxbatch,midpoint_a,1503,1424,completed
+run4_baseline_maxbatch,baseline,328,328,out_of_memory
+run4_baseline_maxbatch,baseline,328,304,completed
