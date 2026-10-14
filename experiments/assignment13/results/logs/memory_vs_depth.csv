@@ -1,0 +1,19 @@
+gpu,variant,n_layer,batch_size,fits,peak_mb
+Tesla T4,baseline,2,32,True,1089.5
+Tesla T4,baseline,4,32,True,1400.0
+Tesla T4,baseline,8,32,True,2021.0
+Tesla T4,baseline,12,32,True,2642.1
+Tesla T4,baseline,16,32,True,3263.1
+Tesla T4,baseline,24,32,True,4505.2
+Tesla T4,baseline,32,32,True,5747.2
+Tesla T4,baseline,48,32,True,8231.4
+Tesla T4,baseline,64,32,True,10715.5
+Tesla T4,midpoint_a,2,32,True,816.0
+Tesla T4,midpoint_a,4,32,True,837.0
+Tesla T4,midpoint_a,8,32,True,879.0
+Tesla T4,midpoint_a,12,32,True,921.1
+Tesla T4,midpoint_a,16,32,True,963.1
+Tesla T4,midpoint_a,24,32,True,1047.2
+Tesla T4,midpoint_a,32,32,True,1131.2
+Tesla T4,midpoint_a,48,32,True,1299.4
+Tesla T4,midpoint_a,64,32,True,1467.5

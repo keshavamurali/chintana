@@ -1,0 +1,127 @@
+{
+  "name": "run3_reversible_maxbatch",
+  "variant": "midpoint_a",
+  "coeffs": [
+    [
+      -0.7420455970596975,
+      1.7420455970596975,
+      1.0
+    ],
+    [
+      -1.4595156218192225,
+      2.4595156218192225,
+      1.0
+    ],
+    [
+      -1.0950658625495857,
+      2.0950658625495855,
+      1.0
+    ],
+    [
+      -0.5322000050798286,
+      1.5322000050798286,
+      1.0
+    ],
+    [
+      -0.9166179605449688,
+      1.916617960544969,
+      1.0
+    ],
+    [
+      1.0046868558173903,
+      -0.004686855817390256,
+      1.0
+    ],
+    [
+      -1.3602542150333212,
+      2.3602542150333212,
+      1.0
+    ],
+    [
+      1.1183689966753316,
+      -0.11836899667533163,
+      1.0
+    ],
+    [
+      -0.5127407989669871,
+      1.5127407989669872,
+      1.0
+    ]
+  ],
+  "memory_saving": true,
+  "loss_impl": "fused",
+  "params_total": 20091648,
+  "params_non_embedding": 7082752,
+  "batch_size": 1424,
+  "block_size": 512,
+  "steps": 69,
+  "tokens": 50307072,
+  "peak_lr": 0.003,
+  "final_train_loss": 6.886942307154338,
+  "final_val_loss": 6.921304559707641,
+  "tokens_per_s": 40615.26904293871,
+  "wall_s": 1308.2951576709747,
+  "diverged": false,
+  "device": "Tesla T4",
+  "dtype": "float16",
+  "mem_start_mb": 97.2685546875,
+  "peak_mem_mb": 13918.8564453125,
+  "peak_reserved_mb": 14742.0,
+  "gpu_total_mb": 14912.6875,
+  "sample_prompt": "The meaning of",
+  "sample": "The meaning of the state.\ns at be the end to you with a body.- \" and as a the world and are a other to that the large.\u201c- for.\n he are the be the a many that the a not from a the health the part as the work the use from it are the right",
+  "config": {
+    "model": {
+      "block_size": 512,
+      "vocab_size": 50304,
+      "n_layer": 9,
+      "n_head": 8,
+      "n_embd": 256,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "rev": {
+      "variant": "midpoint_a",
+      "h": null,
+      "a_seed": 0,
+      "memory_saving": true
+    },
+    "loss": {
+      "impl": "fused",
+      "chunk": 1024
+    },
+    "data": {
+      "dir": "/content/chintana/experiments/assignment13/data/fineweb_edu",
+      "batch_size": 1424,
+      "total_tokens": 50000000
+    },
+    "optim": {
+      "lr": 0.001,
+      "lr_scaling": "sqrt",
+      "ref_batch_size": 64,
+      "lr_cap": 0.003,
+      "min_lr_frac": 0.1,
+      "warmup_frac": 0.03,
+      "min_warmup_steps": 10,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "run3_reversible_maxbatch",
+      "out_dir": "/content/chintana/experiments/assignment13/results/runs",
+      "device": "auto",
+      "dtype": "auto",
+      "seed": 1337,
+      "log_interval": 5,
+      "n_evals": 10,
+      "eval_batches": 50,
+      "eval_batch_size": 32,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": false,
+      "sample_tokens": 64,
+      "sample_prompt": "The meaning of"
+    }
+  }
+}

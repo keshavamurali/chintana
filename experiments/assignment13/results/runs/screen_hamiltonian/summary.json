@@ -1,0 +1,81 @@
+{
+  "name": "screen_hamiltonian",
+  "variant": "hamiltonian",
+  "coeffs": null,
+  "memory_saving": true,
+  "loss_impl": "fused",
+  "params_total": 20091648,
+  "params_non_embedding": 7082752,
+  "batch_size": 64,
+  "block_size": 512,
+  "steps": 306,
+  "tokens": 10027008,
+  "peak_lr": 0.001,
+  "final_train_loss": 6.3087109883626304,
+  "final_val_loss": 6.362455806732178,
+  "tokens_per_s": 41898.14483855656,
+  "wall_s": 272.5313630104065,
+  "diverged": false,
+  "device": "Tesla T4",
+  "dtype": "float16",
+  "mem_start_mb": 97.2685546875,
+  "peak_mem_mb": 966.4130859375,
+  "peak_reserved_mb": 1120.0,
+  "gpu_total_mb": 14912.6875,
+  "sample_prompt": "The meaning of",
+  "sample": "The meaning of the first. The study at a major point of the use of the most of the right, the United States and are a other to that the \u201c\u201cWe\u2019, he was the case the other-\u2019t think,\u2019s,\u2019s work.\u2019s,\u2019",
+  "config": {
+    "model": {
+      "block_size": 512,
+      "vocab_size": 50304,
+      "n_layer": 9,
+      "n_head": 8,
+      "n_embd": 256,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "rev": {
+      "variant": "hamiltonian",
+      "h": null,
+      "a_seed": 0,
+      "memory_saving": true
+    },
+    "loss": {
+      "impl": "fused",
+      "chunk": 1024
+    },
+    "data": {
+      "dir": "/content/chintana/experiments/assignment13/data/fineweb_edu",
+      "batch_size": 64,
+      "total_tokens": 10000000
+    },
+    "optim": {
+      "lr": 0.001,
+      "lr_scaling": "none",
+      "ref_batch_size": 64,
+      "lr_cap": 0.003,
+      "min_lr_frac": 0.1,
+      "warmup_frac": 0.03,
+      "min_warmup_steps": 10,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "screen_hamiltonian",
+      "out_dir": "/content/chintana/experiments/assignment13/results/runs",
+      "device": "auto",
+      "dtype": "auto",
+      "seed": 1337,
+      "log_interval": 50,
+      "n_evals": 5,
+      "eval_batches": 50,
+      "eval_batch_size": 32,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": false,
+      "sample_tokens": 64,
+      "sample_prompt": "The meaning of"
+    }
+  }
+}

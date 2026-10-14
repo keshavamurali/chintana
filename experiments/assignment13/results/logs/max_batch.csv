@@ -1,0 +1,5 @@
+gpu,gpu_total_mb,variant,loss_impl,max_batch,hit_cap,peak_mb_at_max
+Tesla T4,14913,baseline,fused,328,False,14674.2
+Tesla T4,14913,baseline,standard,42,False,14405.6
+Tesla T4,14913,midpoint_a,fused,1503,False,14659.3
+Tesla T4,14913,midpoint_a,standard,48,False,14479.3

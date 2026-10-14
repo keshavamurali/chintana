@@ -1,0 +1,16 @@
+gpu,variant,batch_size,tokens_per_s
+Tesla T4,baseline,8,43365
+Tesla T4,baseline,16,45131
+Tesla T4,baseline,32,45239
+Tesla T4,baseline,64,45340
+Tesla T4,baseline,128,45758
+Tesla T4,baseline,256,46942
+Tesla T4,baseline,328,36529
+Tesla T4,midpoint_a,8,37989
+Tesla T4,midpoint_a,16,39634
+Tesla T4,midpoint_a,32,40138
+Tesla T4,midpoint_a,64,40188
+Tesla T4,midpoint_a,128,40164
+Tesla T4,midpoint_a,256,40408
+Tesla T4,midpoint_a,512,40258
+Tesla T4,midpoint_a,1024,40605

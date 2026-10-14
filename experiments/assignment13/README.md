@@ -16,11 +16,11 @@ for Efficient Training and Fine-Tuning*, [arXiv:2512.02056](https://arxiv.org/ab
 pipeline end to end on a Colab GPU. [`run_all.py`](run_all.py) runs the same pipeline from a
 terminal; its `--preset shakespeare_char` mode produced the results in this README.
 
-> **Status.** Section 6 is a complete, controlled study on a laptop CPU with the Tiny
-> Shakespeare preset (7.2M-parameter model, 2M characters per run; results in `results_cpu/`).
-> The full-scale run (20.1M parameters, 50M FineWeb-Edu tokens per run, reversible *and*
-> baseline at their sustained maximum batch) runs with the notebook on a Colab GPU. Its results
-> go in `results/` and will be added here as section 7.
+> **Status.** **Section 7 has the full-scale results**: 20.1M parameters and 50M FineWeb-Edu
+> tokens per run on a Colab T4, with runs 1–3, the variant screen, and the max-batch and depth
+> probes. Run 4 (the baseline at its maximum batch) and run 3 at the full one-step maximum are
+> still to run (section 7.6). Section 6 is an earlier controlled study on a laptop CPU (Tiny
+> Shakespeare, 7.2M parameters; results in `results_cpu/`).
 
 ---
 
@@ -428,6 +428,183 @@ let a 4× larger batch run inside the baseline's footprint. But with a fixed tok
 larger batch meant 4× fewer updates and a worse loss, and on a CPU it gave no throughput gain.
 
 
+
+## 7. Full-scale results: 20.1M parameters, 50M tokens, Tesla T4
+
+This is the assignment at the specified scale: the 20,091,648-parameter model from section 3,
+trained on 50M FineWeb-Edu tokens per run, on a Colab Tesla T4 (14.6 GB usable) with fp16 autocast. The
+raw numbers are in [`results/summary.md`](results/summary.md), `results/runs/` and
+`results/logs/`.
+
+> **Still to run:** run 4 (the baseline at its own maximum batch) and run 3 at the full
+> one-step maximum (1,503). This session ran an older notebook, which used 95% of the maximum
+> for run 3 and treated run 4 as optional. Both are covered in section 7.6.
+
+### 7.1 Which reversible variant worked
+
+All four reversible variants trained stably, and **all four beat the baseline** in a
+10M-token screen (306 steps at batch 64, same seed and data order):
+
+| variant | final val loss | Δ vs baseline | tokens/s | peak memory |
+|---|---|---|---|---|
+| baseline | 6.4018 | n/a | 46,937 | 3.46 GB |
+| midpoint | 6.3771 | −0.025 | 41,361 | 0.94 GB |
+| **midpoint_a**, chosen | **6.2903** | **−0.112** | 40,296 | 0.94 GB |
+| leapfrog | 6.3616 | −0.040 | 40,218 | 0.94 GB |
+| hamiltonian | 6.3625 | −0.039 | 41,898 | 0.94 GB |
+
+![screening](results/plots/screen_val_loss.png)
+
+`midpoint_a` led at every evaluation after step 0, by 0.07 over the next-best variant at the end. That is
+the same variant the CPU screen picked (section 6.1), where the margins were too small to
+mean anything. Here the lead is clearer, but it is still one seed and early in training.
+Section 7.2 shows the advantage did not last to 50M tokens.
+
+### 7.2 Final loss (50M tokens each)
+
+| run | variant | batch | steps | final train loss | final val loss | Δ val vs run 1 |
+|---|---|---|---|---|---|---|
+| run 1 | baseline | 64 | 1,526 | 4.9826 | **5.0895** | n/a |
+| run 2 | midpoint_a | 64 | 1,526 | 4.9733 | **5.0881** | −0.0014 |
+| run 3 | midpoint_a | 1,424 | 69 | 6.8869 | **6.9213** | +1.83 |
+
+![validation loss](results/plots/val_loss.png)
+![training loss](results/plots/train_loss.png)
+
+- **At the same batch, the reversible model matches the baseline.** It was ahead early
+  (val 6.475 vs 6.533 after 5M tokens) and level by the end: 5.0881 vs 5.0895, a difference of
+  0.0014. This is the paper's quality claim, reproduced at 20M parameters and 50M tokens.
+- **The maximum-batch run is far worse, because it made far fewer updates.** At batch 1,424 the
+  same 50M tokens give only 69 optimizer steps instead of 1,526. The √-scaled learning rate hit
+  its 3e-3 cap (the rule asked for 4.7e-3), so it could not make up the difference. Run 2,
+  the same variant at batch 64, shows reversibility itself is not the cause.
+- No run diverged, and no step had a non-finite loss. Samples are in `results/summary.md`:
+  runs 1 and 2 produce fluent but meaningless English, while run 3 is still word salad.
+
+### 7.3 Peak memory
+
+`torch.cuda.max_memory_allocated` over the whole run. This includes about 0.32 GB of fixed
+state: fp32 weights, gradients and two AdamW moments for 20.1M parameters.
+
+| run | batch | peak memory | of the T4's 14.6 GB |
+|---|---|---|---|
+| run 1 baseline | 64 | **3.46 GB** | 24% |
+| run 2 reversible | 64 | **0.94 GB** (3.7× less) | 6% |
+| run 3 reversible | 1,424 | **13.59 GB** | 93% |
+
+![peak memory](results/plots/peak_memory.png)
+
+**Maximum batch that survives one full training step** (`memory_probe.py`), with the chunked
+loss head used in every run and with the standard full-logits head:
+
+| trunk | chunked loss head | standard loss head |
+|---|---|---|
+| baseline | 328 | 42 |
+| midpoint_a | **1,503** (4.6×) | 48 (1.1×) |
+
+![memory vs batch](results/plots/memory_vs_batch.png)
+
+**Peak memory vs depth** at batch 32, the analogue of the paper's Fig. 3:
+
+| n_layer | 2 | 8 | 16 | 32 | 64 |
+|---|---|---|---|---|---|
+| baseline | 1.06 GB | 1.97 GB | 3.19 GB | 5.61 GB | 10.46 GB |
+| midpoint_a | 0.80 GB | 0.86 GB | 0.94 GB | 1.10 GB | 1.43 GB |
+
+![memory vs depth](results/plots/memory_vs_depth.png)
+
+- **At the same batch, reversible training needs 3.7× less GPU memory** (3.46 → 0.94 GB). That
+  lets it fit **4.6× the batch** (328 → 1,503) on the same GPU.
+- **Memory vs depth reproduces the paper's Fig. 3.** The baseline adds about 150 MB per layer at
+  batch 32. The reversible model adds about 10 MB per layer, which is roughly what one layer's
+  own weights, gradients and Adam state cost (12.6 MB); its stored activations don't grow. At
+  64 layers the gap is 7.3×.
+- **The loss head confirms section 2.2.** With the standard head, the 50k-vocabulary logits
+  dominate memory: the baseline fits batch 42 and the reversible model only 48. Reversibility
+  buys almost nothing there. The chunked head alone raises the baseline's maximum 7.8×
+  (42 → 328), and only together with reversibility does the batch reach 1,503.
+
+### 7.4 Speed (tokens/s)
+
+On the GPU, speed within each run was steady to about ±1%, so the runs' own numbers are
+reliable (unlike the laptop runs in section 6.4).
+
+| run | batch | tokens/s | wall clock |
+|---|---|---|---|
+| run 1 baseline | 64 | **46,140** | 19.2 min |
+| run 2 reversible | 64 | **40,281** (−12.7%) | 21.8 min |
+| run 3 reversible | 1,424 | **40,615** | 21.8 min |
+
+**Throughput vs batch** (`memory_probe.py`, 5 timed steps per point):
+
+| batch | 8 | 16 | 64 | 256 | 328 | 1,024 |
+|---|---|---|---|---|---|---|
+| baseline | 43,365 | 45,131 | 45,340 | **46,942** | 36,529 | n/a (too large) |
+| midpoint_a | 37,989 | 39,634 | 40,188 | 40,408 | n/a | **40,605** |
+
+![throughput vs batch](results/plots/throughput_vs_batch.png)
+
+- **Reversible training costs 12.7% in tokens/s at the same batch** (14.5% more time per
+  token). That is less than the 20% measured on the CPU (section 6.4), and below the paper's
+  30–50%.
+- **A bigger batch buys almost no throughput on the T4.** Both trunks are flat from batch 16
+  onward. Run 3 at batch 1,424 was only 0.8% faster than run 2 at batch 64. Even at their best,
+  the reversible model peaks at 40.6k tokens/s and the baseline at 46.9k. The paper's throughput
+  gains (its Table 4) come from baselines that could only fit very small batches. A 20M model on
+  a T4 is already compute-bound at batch 16, so there is no headroom for a bigger batch to use.
+- **At its absolute memory limit, the baseline slows down sharply**: 36.5k tokens/s at batch
+  328, using 98% of memory, versus 46.9k at 256. The reversible model showed no such slowdown,
+  even in run 3 at 93% of memory.
+
+### 7.5 Numerical findings under fp16
+
+| check (GPU, fp16 autocast) | midpoint | midpoint_a | leapfrog | hamiltonian |
+|---|---|---|---|---|
+| gradient vs ordinary autograd (relative error) | 1.1e-2 | 1.2e-2 | 1.0e-2 | 9.5e-3 |
+| worst rebuilt-state error, fp16 | 1.6e-3 | 1.2e-2 | 8.4e-3 | 1.2e-3 |
+| worst rebuilt-state error, fp32 | 1.7e-6 | 1.5e-5 | 1.9e-5 | 1.2e-6 |
+
+- **In fp32, the GPU's rebuilt-state errors match the CPU's** (1e-6 to 2e-5), and the reversible
+  backward is exact (section 4).
+- **Under fp16 autocast, rebuilt states drift by 0.1–1%, and gradients differ from autograd by
+  about 1%.** The likely cause is that each layer's input is rounded to fp16 before its
+  matrix multiplies. A rebuilt state that is off by even fp32 rounding can then round to a
+  different fp16 value, so the recomputed layer output shifts by an fp16 step, and the shift
+  carries to the next layer down. As the stability analysis predicts, the rules that divide or
+  multiply (`midpoint_a`, `leapfrog`) amplify it about 10× more than the plain-subtraction
+  rules (`midpoint`, `hamiltonian`). It made no difference to training: run 2 matched run 1
+  (7.2).
+- The fused and standard loss heads agree on the loss (1.6e-5) but not on the fp16 gradient
+  (13%). This check runs without loss scaling, so the likely culprit is the standard head's
+  fp16 logits gradient underflowing, which the fused head avoids by design (section 2.2). I
+  have not verified this against an fp32 reference. Every training run used the fused head
+  with `GradScaler`.
+
+### 7.6 Still to run
+
+To complete the maximum-batch comparison, rerun the notebook from this branch. Before you
+run it, copy this `results/` folder into `MyDrive/chintana_assignment13/results/` so that
+finished stages are skipped:
+
+- **Run 4:** the baseline trained at its sustained maximum batch, starting from 328. About 30
+  minutes including re-tokenizing the data.
+- **Run 3 at batch 1,503** (`REDO_RUN3 = True`): starts at the full one-step maximum, steps down
+  only on out-of-memory, and logs every attempt in `results/logs/sustained_batch.csv`. About
+  25 minutes.
+
+### 7.7 Summary
+
+| | run 1 baseline (B=64) | run 2 reversible (B=64) | run 3 reversible (B=1,424) |
+|---|---|---|---|
+| final val loss | 5.0895 | 5.0881 | 6.9213 |
+| tokens/s | 46,140 | 40,281 | 40,615 |
+| peak GPU memory | 3.46 GB | **0.94 GB** | 13.59 GB |
+| optimizer steps | 1,526 | 1,526 | 69 |
+
+At full scale, reversible `midpoint_a` matched the baseline's loss with **3.7× less GPU
+memory** and **12.7% fewer tokens/s**. Its memory stayed flat with depth while the baseline's
+grew linearly, and it fit **4.6× the batch**. On a T4 that bigger batch buys no throughput,
+and with a fixed 50M-token budget it costs a great deal of loss.
 
 ## 8. Caveats
 

@@ -1,0 +1,81 @@
+{
+  "name": "run1_baseline",
+  "variant": "baseline",
+  "coeffs": null,
+  "memory_saving": true,
+  "loss_impl": "fused",
+  "params_total": 20091648,
+  "params_non_embedding": 7082752,
+  "batch_size": 64,
+  "block_size": 512,
+  "steps": 1526,
+  "tokens": 50003968,
+  "peak_lr": 0.001,
+  "final_train_loss": 4.9826418399810795,
+  "final_val_loss": 5.089491491317749,
+  "tokens_per_s": 46140.10957673145,
+  "wall_s": 1150.3976888656616,
+  "diverged": false,
+  "device": "Tesla T4",
+  "dtype": "float16",
+  "mem_start_mb": 97.2685546875,
+  "peak_mem_mb": 3539.9130859375,
+  "peak_reserved_mb": 3668.0,
+  "gpu_total_mb": 14912.6875,
+  "sample_prompt": "The meaning of",
+  "sample": "The meaning of \u201cthe most important\u201d of the \u201cthe meaning of the \u201canomic\u201d and \u201cuncocian\u201d\u201d of the \u201cfable,\u201d and \u201cthe \u201call-al\u201d\u201d, \u201cthe \u201ca\u201d",
+  "config": {
+    "model": {
+      "block_size": 512,
+      "vocab_size": 50304,
+      "n_layer": 9,
+      "n_head": 8,
+      "n_embd": 256,
+      "dropout": 0.0,
+      "bias": false
+    },
+    "rev": {
+      "variant": "baseline",
+      "h": null,
+      "a_seed": 0,
+      "memory_saving": true
+    },
+    "loss": {
+      "impl": "fused",
+      "chunk": 1024
+    },
+    "data": {
+      "dir": "/content/chintana/experiments/assignment13/data/fineweb_edu",
+      "batch_size": 64,
+      "total_tokens": 50000000
+    },
+    "optim": {
+      "lr": 0.001,
+      "lr_scaling": "none",
+      "ref_batch_size": 64,
+      "lr_cap": 0.003,
+      "min_lr_frac": 0.1,
+      "warmup_frac": 0.03,
+      "min_warmup_steps": 10,
+      "weight_decay": 0.1,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "grad_clip": 1.0
+    },
+    "run": {
+      "name": "run1_baseline",
+      "out_dir": "/content/chintana/experiments/assignment13/results/runs",
+      "device": "auto",
+      "dtype": "auto",
+      "seed": 1337,
+      "log_interval": 50,
+      "n_evals": 10,
+      "eval_batches": 50,
+      "eval_batch_size": 32,
+      "speed_warmup_steps": 5,
+      "save_checkpoint": false,
+      "sample_tokens": 64,
+      "sample_prompt": "The meaning of"
+    }
+  }
+}

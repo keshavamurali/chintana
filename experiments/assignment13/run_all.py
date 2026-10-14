@@ -190,6 +190,9 @@ def main():
             sh(*probe, "--modes", "speed", "--variants", f"baseline,{need_chosen()}", "--speed-batches",
                f"{args.batch},{args.run3_batch}")
         elif stage == "probe":
+            if (RESULTS / "logs" / "max_batch.csv").exists() and not args.force:
+                print("logs/max_batch.csv exists, skipping the probe; --force re-probes")
+                continue
             sh("memory_probe.py", "--modes", "max,throughput,depth", "--variants", f"baseline,{need_chosen()}",
                "--loss-impls", "fused,standard")
         elif stage == "run1":
